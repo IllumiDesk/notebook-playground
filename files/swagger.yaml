@@ -1,0 +1,8118 @@
+swagger: '2.0'
+info:
+  title: illumidesk
+  description: illumidesk API v1 description
+  version: v1
+host: api.illumidesk.com
+schemes:
+  - https
+basePath: /api/v1
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    in: header
+    name: Authorization
+security:
+  - Bearer: []
+paths:
+  /accounts/auth0/authorization-complete/:
+    post:
+      operationId: accounts_auth0_authorization_complete
+      description: Authorize user by authorization code.
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/AuthorizationComplete'
+        - name: redirect_uri
+          in: query
+          description: This is URL for which we generated code.
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/AuthorizationCompleteResponse'
+        '403':
+          description: Failure
+          examples:
+            application/json:
+              detail: The "foo@example.com" email address is not verified.
+              code: unverified_email
+              user_id: auth0|628e202d470ff0006f5fcb06
+      tags:
+        - auth0
+    parameters: []
+  /accounts/auth0/authorization-url/:
+    get:
+      operationId: accounts_auth0_authorization_url
+      description: |-
+        Return a URL to redirect the customer's web browser to make an
+        authorization request.
+      parameters:
+        - name: redirect_uri
+          in: query
+          description: After the user authenticates we will call back to this URL.
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/AuthorizationURL'
+      tags:
+        - auth0
+    parameters: []
+  /accounts/auth0/send-change-password-email/:
+    post:
+      operationId: accounts_auth0_send_change_password_email
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          examples:
+            application/json:
+              detail: An email with a link to the password change page has been sent
+                to your email address.
+        '400':
+          description: Failure
+          examples:
+            application/json:
+              detail: You cannot change password because user account does not exist
+                in the Auth0 database.
+      tags:
+        - auth0
+    parameters: []
+  /accounts/auth0/send-verification-email/:
+    post:
+      operationId: accounts_auth0_send_verification_email
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/SendVerificationEmail'
+      responses:
+        '200':
+          description: Success
+          examples:
+            application/json:
+              detail: An email with a link to verify your account has been sent to
+                your email address.
+        '400':
+          description: Failure
+          examples:
+            application/json:
+              detail: Unauthorized.
+      tags:
+        - auth0
+    parameters: []
+  /accounts/avatar/:
+    post:
+      operationId: accounts_avatar_create
+      description: ''
+      parameters:
+        - name: avatar
+          in: formData
+          required: true
+          type: file
+      responses:
+        '200':
+          description: Success
+          examples:
+            application/json:
+              url: 
+                https://example.com/accounts/2ea3f567-35d8-4ebe-b196-136a1fd8afb0/avatars/luzokifwcjbhbitwnsplropkojxlwwth.jpg
+        '400':
+          description: Failure
+          examples:
+            application/json:
+              detail: Invalid content type.
+      consumes:
+        - multipart/form-data
+      tags:
+        - accounts
+    delete:
+      operationId: accounts_avatar_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: Success
+        '400':
+          description: Failure
+          examples:
+            application/json:
+              detail: Avatar has been already deleted.
+      consumes:
+        - multipart/form-data
+      tags:
+        - accounts
+    parameters: []
+  /accounts/change-password/:
+    put:
+      operationId: accounts_change-password_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ChangePassword'
+      responses:
+        '204':
+          description: ''
+      tags:
+        - accounts
+    parameters: []
+  /accounts/confirm-reset-password/:
+    post:
+      operationId: accounts_confirm-reset-password_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ConfirmResetPassword'
+      responses:
+        '204':
+          description: ''
+      tags:
+        - accounts
+    parameters: []
+  /accounts/create-test-user/:
+    post:
+      operationId: accounts_create-test-user_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CreateTestUser'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/CreateTestUser'
+      tags:
+        - accounts
+    parameters: []
+  /accounts/delete-test-user/:
+    delete:
+      operationId: accounts_delete-test-user_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - accounts
+    parameters: []
+  /accounts/forgot-subdomain/:
+    post:
+      operationId: accounts_forgot-subdomain_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ForgotSubdomain'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/ForgotSubdomain'
+      tags:
+        - accounts
+    parameters: []
+  /accounts/me/:
+    get:
+      operationId: accounts_me_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/UserProfile'
+      tags:
+        - accounts
+    put:
+      operationId: accounts_me_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserProfile'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/UserProfile'
+      tags:
+        - accounts
+    patch:
+      operationId: accounts_me_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserProfile'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/UserProfile'
+      tags:
+        - accounts
+    parameters: []
+  /accounts/me/delete/:
+    delete:
+      operationId: accounts_me_delete_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - accounts
+    parameters: []
+  /accounts/preferences/notification/:
+    get:
+      operationId: accounts_preferences_notification_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/AccountNotificationPreferences'
+      tags:
+        - accounts
+    put:
+      operationId: accounts_preferences_notification_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/AccountNotificationPreferences'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/AccountNotificationPreferences'
+      tags:
+        - accounts
+    patch:
+      operationId: accounts_preferences_notification_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/AccountNotificationPreferences'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/AccountNotificationPreferences'
+      tags:
+        - accounts
+    parameters: []
+  /accounts/register/:
+    post:
+      operationId: accounts_register_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/AccountRegistration'
+      responses:
+        '201':
+          description: Account created
+          schema:
+            required:
+              - token
+              - campus_slug
+            type: object
+            properties:
+              token:
+                type: string
+              campus_slug:
+                type: string
+          examples:
+            application/json:
+              token: user_token
+              campus_slug: campus-slug
+      tags:
+        - accounts
+    parameters: []
+  /accounts/send-verification-email/:
+    post:
+      operationId: accounts_send-verification-email_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ForgotSubdomain'
+      responses:
+        '204':
+          description: Email verification sent successfully
+      tags:
+        - accounts
+    parameters: []
+  /accounts/verify-email/:
+    post:
+      operationId: accounts_verify-email_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/VerifyEmail'
+      responses:
+        '204':
+          description: Email verified successfully
+      tags:
+        - accounts
+    parameters: []
+  /campuses/:
+    get:
+      operationId: campuses_list
+      description: ''
+      parameters:
+        - name: search
+          in: query
+          description: A search term.
+          required: false
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CampusList'
+      tags:
+        - campuses
+    post:
+      operationId: campuses_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Campus'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Campus'
+      tags:
+        - campuses
+    parameters: []
+  /campuses/auth-info/:
+    get:
+      operationId: campuses_auth-info_list
+      description: ''
+      parameters:
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: Campus Auth Info
+          schema:
+            required:
+              - login_type
+              - campus_slug
+            type: object
+            properties:
+              login_type:
+                type: string
+                enum:
+                  - default_auth0
+                  - campus_auth0
+                  - custom_login
+              campus_slug:
+                type: string
+          examples:
+            application/json:
+              login_type: campus_auth0
+              campus_slug: my-campus
+      tags:
+        - campuses
+    parameters: []
+  /campuses/generate-slug/:
+    post:
+      operationId: campuses_generate-slug_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CampusGenerateSlug'
+      responses:
+        '200':
+          description: Success
+          schema:
+            required:
+              - slug
+            type: object
+            properties:
+              slug:
+                type: string
+          examples:
+            application/json:
+              slug: my-campus
+      tags:
+        - campuses
+    parameters: []
+  /campuses/invitation-accept/:
+    post:
+      operationId: campuses_invitation-accept_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CampusInvitationAccept'
+      responses:
+        '200':
+          description: Invitation accepted.
+          schema:
+            required:
+              - token
+            type: object
+            properties:
+              token:
+                type: string
+          examples:
+            application/json:
+              token: test_invitation_token
+      tags:
+        - campus-invitations
+    parameters: []
+  /campuses/public/campuses/{campus_slug}/:
+    get:
+      operationId: campuses_public_campuses_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CampusPublic'
+      tags:
+        - campuses
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/public/campuses/{campus_slug}/courses/:
+    get:
+      operationId: campuses_public_campuses_courses_list
+      description: ''
+      parameters:
+        - name: search
+          in: query
+          description: A search term.
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/CoursePublicList'
+      tags:
+        - courses
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/validate-slug/:
+    post:
+      operationId: campuses_validate-slug_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CampusValidateSlug'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/CampusValidateSlug'
+      tags:
+        - campuses
+    parameters: []
+  /campuses/{campus_slug}/:
+    get:
+      operationId: campuses_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Campus'
+      tags:
+        - campuses
+    put:
+      operationId: campuses_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Campus'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Campus'
+      tags:
+        - campuses
+    patch:
+      operationId: campuses_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Campus'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Campus'
+      tags:
+        - campuses
+    delete:
+      operationId: campuses_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - campuses
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/auth0/authorization-url/:
+    get:
+      operationId: campuses_auth0_authorization_url
+      description: |-
+        Return a URL to redirect the customer's web browser to make an
+        authorization request.
+      parameters:
+        - name: redirect_uri
+          in: query
+          description: After the user authenticates we will call back to this URL.
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/AuthorizationURL'
+      tags:
+        - auth0
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/base-images/:
+    get:
+      operationId: campuses_base_images
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/BaseImage'
+      tags:
+        - campuses
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/courses/:
+    get:
+      operationId: campuses_courses_list
+      description: ''
+      parameters:
+        - name: search
+          in: query
+          description: A search term.
+          required: false
+          type: string
+        - name: campus
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: status
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: ordering
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/CourseList'
+      tags:
+        - courses
+    post:
+      operationId: campuses_courses_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CourseCreate'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/CourseCreate'
+      tags:
+        - courses
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/courses/generate-slug/:
+    post:
+      operationId: campuses_courses_generate-slug_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CourseGenerateSlug'
+      responses:
+        '200':
+          description: Success
+          schema:
+            required:
+              - slug
+            type: object
+            properties:
+              slug:
+                type: string
+          examples:
+            application/json:
+              slug: my-campus
+      tags:
+        - courses
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/courses/search/:
+    get:
+      operationId: campuses_courses_search_list
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CourseLessonSearchList'
+      tags:
+        - courses
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/custom-domain/:
+    get:
+      operationId: campuses_custom-domain_list
+      description: Get custom domain for a campus.
+      parameters:
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CampusCustomDomain'
+      tags:
+        - campus-custom-domain
+    put:
+      operationId: campuses_custom-domain_update
+      description: Register a new campus domain.
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CampusCustomDomain'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CampusCustomDomain'
+      tags:
+        - campus-custom-domain
+    delete:
+      operationId: campuses_custom-domain_delete
+      description: Delete a campus custom domain.
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - campus-custom-domain
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/custom-domain/verify/:
+    post:
+      operationId: campuses_custom-domain_verify_create
+      description: Verify a campus custom domain.
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CampusCustomDomain'
+        '404':
+          description: Not Found
+      tags:
+        - campus-custom-domain
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/custom-style/:
+    get:
+      operationId: campuses_custom-style_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/CampusCustomStyle'
+      tags:
+        - campuses
+    put:
+      operationId: campuses_custom-style_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CampusCustomStyle'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CampusCustomStyle'
+      tags:
+        - campuses
+    patch:
+      operationId: campuses_custom-style_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CampusCustomStyle'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CampusCustomStyle'
+      tags:
+        - campuses
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/email-settings/:
+    get:
+      operationId: campuses_email-settings_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CampusEmailSettings'
+      tags:
+        - campuses
+    put:
+      operationId: campuses_email-settings_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CampusEmailSettings'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CampusEmailSettings'
+      tags:
+        - campuses
+    patch:
+      operationId: campuses_email-settings_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CampusEmailSettings'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CampusEmailSettings'
+      tags:
+        - campuses
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/invitations-by-token/{token}/:
+    get:
+      operationId: campuses_invitations-by-token_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CampusInvitationPublic'
+      tags:
+        - campus-invitations
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+      - name: token
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/login/:
+    post:
+      operationId: campuses_login_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Login'
+        - name: redirect_uri
+          in: query
+          description: This is URL for which we generated code.
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/AuthorizationCompleteResponse'
+        '403':
+          description: Failure
+          examples:
+            application/json:
+              detail: The "foo@example.com" email address is not verified.
+              code: unverified_email
+              user_id: auth0|628e202d470ff0006f5fcb06
+      tags:
+        - campuses
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/lti-integrations/:
+    get:
+      operationId: campuses_lti-integrations_list
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/LTIIntegration'
+      tags:
+        - campus-lti-integrations
+    post:
+      operationId: campuses_lti-integrations_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/LTIIntegration'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/LTIIntegration'
+      tags:
+        - campus-lti-integrations
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/lti-integrations/{integration_uuid}/:
+    get:
+      operationId: campuses_lti-integrations_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/LTIIntegration'
+      tags:
+        - campus-lti-integrations
+    put:
+      operationId: campuses_lti-integrations_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/LTIIntegration'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/LTIIntegration'
+      tags:
+        - campus-lti-integrations
+    patch:
+      operationId: campuses_lti-integrations_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/LTIIntegration'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/LTIIntegration'
+      tags:
+        - campus-lti-integrations
+    delete:
+      operationId: campuses_lti-integrations_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - campus-lti-integrations
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+      - name: integration_uuid
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/members/:
+    get:
+      operationId: campuses_members_list
+      description: ''
+      parameters:
+        - name: search
+          in: query
+          description: A search term.
+          required: false
+          type: string
+        - name: role
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: ordering
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/CampusMember'
+      tags:
+        - campus-members
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/members/{user_uuid}/:
+    get:
+      operationId: campuses_members_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CampusMemberUpdate'
+      tags:
+        - campus-members
+    put:
+      operationId: campuses_members_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CampusMemberUpdate'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CampusMemberUpdate'
+      tags:
+        - campus-members
+    patch:
+      operationId: campuses_members_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CampusMemberUpdate'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CampusMemberUpdate'
+      tags:
+        - campus-members
+    delete:
+      operationId: campuses_members_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - campus-members
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+      - name: user_uuid
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/notifications/:
+    get:
+      operationId: campuses_notifications_list
+      description: ''
+      parameters:
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/Notification'
+      tags:
+        - notifications
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/notifications/count/:
+    get:
+      operationId: campuses_notifications_count_list
+      description: ''
+      parameters:
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: Notification count.
+          schema:
+            required:
+              - unread
+            type: object
+            properties:
+              unread:
+                type: integer
+          examples:
+            application/json:
+              unread: 5
+      tags:
+        - notifications
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/notifications/mark-read/:
+    post:
+      operationId: campuses_notifications_mark-read_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/NotificationIds'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/NotificationIds'
+      tags:
+        - notifications
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/reset-password/:
+    post:
+      operationId: campuses_reset-password_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ResetPassword'
+      responses:
+        '204':
+          description: ''
+      tags:
+        - campuses
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/send-test-email/:
+    post:
+      operationId: campuses_send-test-email_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CampusTestEmailProvider'
+      responses:
+        '200':
+          description: Test email sent successfully
+        '400':
+          description: Failure
+          schema:
+            required:
+              - detail
+            type: object
+            properties:
+              detail:
+                description: Error message
+                type: string
+          examples:
+            application/json:
+              detail: 'Error sending test email: SMTP error'
+      tags:
+        - campuses
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/subscriptions/info/:
+    get:
+      operationId: campuses_subscriptions_info_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CampusSubscription'
+      tags:
+        - subscriptions
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/subscriptions/subscribe/:
+    post:
+      operationId: campuses_subscriptions_subscribe_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Subscribe'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/CampusSubscription'
+      tags:
+        - subscriptions
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/subscriptions/surplus-instructors/:
+    post:
+      operationId: campuses_subscriptions_surplus-instructors_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/RequestSurplusInstructors'
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: object
+            properties:
+              surplus_instructors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    courses:
+                      type: array
+                      items:
+                        type: string
+      tags:
+        - subscriptions
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/templates/:
+    get:
+      operationId: campuses_templates_list
+      description: ''
+      parameters:
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/CourseTemplateList'
+      tags:
+        - templates
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/user-invitations/:
+    get:
+      operationId: campuses_user-invitations_list
+      description: ''
+      parameters:
+        - name: search
+          in: query
+          description: A search term.
+          required: false
+          type: string
+        - name: role
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: status
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: ordering
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/CampusInvitation'
+      tags:
+        - campus-invitations
+    post:
+      operationId: campuses_user-invitations_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CampusInvitations'
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CampusInvitation'
+      tags:
+        - campus-invitations
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/user-invitations/{id}/:
+    delete:
+      operationId: campuses_user-invitations_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - campus-invitations
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+      - name: id
+        in: path
+        required: true
+        type: string
+  /campuses/{campus_slug}/user-invitations/{id}/resend/:
+    put:
+      operationId: campuses_user-invitations_resend_update
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CampusInvitation'
+      tags:
+        - campus-invitations
+    parameters:
+      - name: campus_slug
+        in: path
+        required: true
+        type: string
+      - name: id
+        in: path
+        required: true
+        type: string
+  /chats/ai-chat/messages/:
+    get:
+      operationId: chats_ai-chat_messages_list
+      description: ''
+      parameters:
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/AIChatMessage'
+      tags:
+        - chats
+    post:
+      operationId: chats_ai-chat_messages_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/AIChatMessage'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/AIChatMessage'
+      tags:
+        - chats
+    parameters: []
+  /chats/ai-chat/messages/{message_uuid}/regenerate/:
+    post:
+      operationId: chats_ai-chat_messages_regenerate_create
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/AIChatMessage'
+        '400':
+          description: Your AI Request timed out, please try again
+      tags:
+        - chats
+    parameters:
+      - name: message_uuid
+        in: path
+        required: true
+        type: string
+  /courses/activity-images/:
+    get:
+      operationId: courses_activity-images_list
+      description: ''
+      parameters:
+        - name: search
+          in: query
+          description: A search term.
+          required: false
+          type: string
+        - name: language
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/BaseImage'
+      tags:
+        - courses
+    parameters: []
+  /courses/chat-completion/:
+    post:
+      operationId: courses_chat-completion_create
+      description: Get a response from OpenAI
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ChatCompletionRequestCreate'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/ChatCompletionRequest'
+        '400':
+          description: Your AI Request timed out, please try again
+      tags:
+        - ai
+    parameters: []
+  /courses/chat-completion/favorites/:
+    get:
+      operationId: courses_chat-completion_favorites_list
+      description: ''
+      parameters:
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/ChatCompletionRequestList'
+      tags:
+        - ai
+    parameters: []
+  /courses/chat-completion/favorites/{chat_id}/:
+    put:
+      operationId: courses_chat-completion_favorites_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ChatCompletionRequestUpdateFavorite'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/ChatCompletionRequestUpdateFavorite'
+      tags:
+        - ai
+    patch:
+      operationId: courses_chat-completion_favorites_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ChatCompletionRequestUpdateFavorite'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/ChatCompletionRequestUpdateFavorite'
+      tags:
+        - ai
+    parameters:
+      - name: chat_id
+        in: path
+        required: true
+        type: string
+  /courses/chat-completion/recents/:
+    get:
+      operationId: courses_chat-completion_recents_list
+      description: ''
+      parameters:
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/ChatCompletionRequestList'
+      tags:
+        - ai
+    parameters: []
+  /courses/chat-completion/recents/{chat_id}/:
+    delete:
+      operationId: courses_chat-completion_recents_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - ai
+    parameters:
+      - name: chat_id
+        in: path
+        required: true
+        type: string
+  /courses/invitation-accept/:
+    post:
+      operationId: courses_invitation-accept_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CourseInvitationAccept'
+      responses:
+        '200':
+          description: Invitation accepted.
+          schema:
+            required:
+              - token
+            type: object
+            properties:
+              token:
+                type: string
+          examples:
+            application/json:
+              token: test_invitation_token
+      tags:
+        - course-invitations
+    parameters: []
+  /courses/validate-slug/:
+    post:
+      operationId: courses_validate-slug_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CourseValidateSlug'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/CourseValidateSlug'
+      tags:
+        - courses
+    parameters: []
+  /courses/{course_slug}/:
+    get:
+      operationId: courses_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CourseDetail'
+      tags:
+        - courses
+    put:
+      operationId: courses_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CourseDetail'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CourseDetail'
+      tags:
+        - courses
+    patch:
+      operationId: courses_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CourseDetail'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CourseDetail'
+      tags:
+        - courses
+    delete:
+      operationId: courses_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - courses
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/activities/:
+    get:
+      operationId: courses_activities_list
+      description: ''
+      parameters:
+        - name: search
+          in: query
+          description: A search term.
+          required: false
+          type: string
+        - name: status
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: ordering
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/ActivityList'
+      tags:
+        - activities
+    post:
+      operationId: courses_activities_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ActivityCreate'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/ActivityDetail'
+      tags:
+        - activities
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/activities/import/:
+    post:
+      operationId: courses_activities_import_from_notebook
+      summary: Imports activity from notebook.
+      description: |-
+        **Error codes**:
+
+            - invalid_cells - Notebook has invalid cells. Import can be continued with the skip_invalid_cells flag.
+            - invalid_notebook - Notebook is invalid. Import cannot be continued.
+            - not_supported_language - Notebook language is not supported. Import cannot be continued.
+            - too_many_invalid_cells - Notebook contains to many invalid cells. Import cannot be continued.
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ActivityImport'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/ActivityDetail'
+        '400':
+          description: Failure
+          examples:
+            application/json:
+              detail: Notebook file is invalid.
+              code: invalid_notebook
+      tags:
+        - activities
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/activities/{activity_slug}/:
+    get:
+      operationId: courses_activities_read
+      description: ''
+      parameters:
+        - name: fields
+          in: query
+          required: true
+          type: array
+          items:
+            type: string
+            minLength: 1
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/ActivityDetail'
+      tags:
+        - activities
+    put:
+      operationId: courses_activities_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ActivityUpdate'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/ActivityDetail'
+      tags:
+        - activities
+    patch:
+      operationId: courses_activities_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ActivityUpdate'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/ActivityDetail'
+      tags:
+        - activities
+    delete:
+      operationId: courses_activities_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - activities
+    parameters:
+      - name: activity_slug
+        in: path
+        required: true
+        type: string
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/activities/{activity_slug}/attachments-by-chunked/:
+    post:
+      operationId: courses_activities_add_attachment_by_chunked_upload
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ActivityAttachmentAddByChunkedUpload'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/ActivityAttachment'
+      tags:
+        - activities
+    parameters:
+      - name: activity_slug
+        in: path
+        required: true
+        type: string
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/activities/{activity_slug}/attachments/:
+    get:
+      operationId: courses_activities_attachments_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ActivityAttachment'
+      tags:
+        - activities
+    post:
+      operationId: courses_activities_attachments_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ActivityAttachmentAdd'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/ActivityAttachment'
+      tags:
+        - activities
+    parameters:
+      - name: activity_slug
+        in: path
+        required: true
+        type: string
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/activities/{activity_slug}/attachments/{attachment_uuid}/:
+    delete:
+      operationId: courses_activities_delete_attachment
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - activities
+    parameters:
+      - name: activity_slug
+        in: path
+        required: true
+        type: string
+      - name: attachment_uuid
+        in: path
+        required: true
+        type: string
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/activities/{activity_slug}/cells/:
+    get:
+      operationId: courses_activities_cells_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ActivityCells'
+      tags:
+        - activities
+    put:
+      operationId: courses_activities_cells_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ActivityCells'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/ActivityCells'
+      tags:
+        - activities
+    parameters:
+      - name: activity_slug
+        in: path
+        required: true
+        type: string
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/activities/{activity_slug}/cells/execution-state/:
+    get:
+      operationId: courses_activities_cells_cells_execution_state
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CellsExecutionState'
+        '404':
+          description: 'Error: Not Found'
+          examples:
+            application/json:
+              detail: Not found.
+      tags:
+        - activities
+    parameters:
+      - name: activity_slug
+        in: path
+        required: true
+        type: string
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/activities/{activity_slug}/copy/:
+    post:
+      operationId: courses_activities_copy_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ActivityCopy'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/ActivityDetail'
+      tags:
+        - activities
+    parameters:
+      - name: activity_slug
+        in: path
+        required: true
+        type: string
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/activities/{activity_slug}/export/:
+    get:
+      operationId: courses_activities_export
+      description: |-
+        Converts activity to Jupyter notebook format with nbgrader metadata
+        and exports to plain ipynb file or zip archive if activity has at
+        least one attachment.
+      parameters: []
+      responses:
+        '200':
+          description: ipynb file or zip archive
+      tags:
+        - activities
+    parameters:
+      - name: activity_slug
+        in: path
+        required: true
+        type: string
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/activities/{activity_slug}/generate-unittests/:
+    post:
+      operationId: courses_activities_generate_unittests
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/GenerateUnittests'
+      responses:
+        '200':
+          description: Unittests generated.
+          schema:
+            required:
+              - tests
+            type: object
+            properties:
+              tests:
+                type: string
+          examples:
+            application/json:
+              tests: assert True
+      tags:
+        - ai
+    parameters:
+      - name: activity_slug
+        in: path
+        required: true
+        type: string
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/activities/{activity_slug}/publish/:
+    post:
+      operationId: courses_activities_publish
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          examples:
+            application/json:
+              detail: Activity has been successfully published.
+        '400':
+          description: Failure
+          examples:
+            application/json:
+              detail: Activity cannot be published.
+      tags:
+        - activities
+    parameters:
+      - name: activity_slug
+        in: path
+        required: true
+        type: string
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/activities/{activity_slug}/submissions/:
+    get:
+      operationId: courses_activities_submissions_read
+      description: ''
+      parameters:
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+        - name: search
+          in: query
+          type: string
+        - name: status
+          in: query
+          type: string
+        - name: ordering
+          in: query
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ActivitySubmissionList'
+      tags:
+        - activities
+    post:
+      operationId: courses_activities_submissions_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ActivitySubmissionCreate'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/ActivitySubmissionCreate'
+      tags:
+        - activities
+    parameters:
+      - name: activity_slug
+        in: path
+        required: true
+        type: string
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/activities/{activity_slug}/sync-grades/:
+    post:
+      operationId: courses_activities_sync_grades
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          examples:
+            application/json:
+              detail: Sync grades has been successfully finished.
+      tags:
+        - activities
+    parameters:
+      - name: activity_slug
+        in: path
+        required: true
+        type: string
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/activities/{activity_slug}/unpublish/:
+    post:
+      operationId: courses_activities_unpublish
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          examples:
+            application/json:
+              detail: Activity has been successfully unpublished.
+        '400':
+          description: Failure
+          examples:
+            application/json:
+              detail: Activity cannot be unpublished.
+      tags:
+        - activities
+    parameters:
+      - name: activity_slug
+        in: path
+        required: true
+        type: string
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/activities/{activity_slug}/validate/:
+    post:
+      operationId: courses_activities_validate
+      description: ''
+      parameters: []
+      responses:
+        '202':
+          description: Success
+          examples:
+            application/json:
+              detail: Validation has been successfully started.
+        '423':
+          description: Failure
+          examples:
+            application/json:
+              detail: Resource is locked.
+              code: resource_locked
+      tags:
+        - activities
+    parameters:
+      - name: activity_slug
+        in: path
+        required: true
+        type: string
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/activities/{activity_slug}/validation-results/:
+    get:
+      operationId: courses_activities_validation_results
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          examples:
+            application/json:
+              detail: Validation results returned.
+        '423':
+          description: Failure
+          examples:
+            application/json:
+              detail: Resource is locked.
+              code: resource_locked
+      tags:
+        - activities
+    parameters:
+      - name: activity_slug
+        in: path
+        required: true
+        type: string
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/chunked-upload-complete/:
+    post:
+      operationId: courses_chunked-upload-complete_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CompleteChunkUpload'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/CompleteChunkUpload'
+      tags:
+        - courses
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/chunked-upload/:
+    post:
+      operationId: courses_chunked-upload_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/AddChunkByActivity'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/AddChunkByActivity'
+      tags:
+        - courses
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/comments/:
+    post:
+      operationId: courses_comments_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CommentCreate'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/CommentCreate'
+      tags:
+        - discussions
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/comments/{comment_uuid}/:
+    get:
+      operationId: courses_comments_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CommentRead'
+      tags:
+        - discussions
+    put:
+      operationId: courses_comments_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Comment'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Comment'
+      tags:
+        - discussions
+    patch:
+      operationId: courses_comments_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Comment'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Comment'
+      tags:
+        - discussions
+    delete:
+      operationId: courses_comments_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - discussions
+    parameters:
+      - name: comment_uuid
+        in: path
+        required: true
+        type: string
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/comments/{comment_uuid}/reactions/:
+    put:
+      operationId: courses_comments_update_user_reactions
+      description: Update user reactions
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Reaction'
+      responses:
+        '204':
+          description: No content
+      tags:
+        - discussions
+    parameters:
+      - name: comment_uuid
+        in: path
+        required: true
+        type: string
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/discussions/:
+    post:
+      operationId: courses_discussions_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/DiscussionCreate'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/DiscussionCreate'
+      tags:
+        - discussions
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/discussions/{discussion_uuid}/:
+    get:
+      operationId: courses_discussions_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/DiscussionRead'
+      tags:
+        - discussions
+    put:
+      operationId: courses_discussions_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Discussion'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Discussion'
+      tags:
+        - discussions
+    patch:
+      operationId: courses_discussions_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Discussion'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Discussion'
+      tags:
+        - discussions
+    delete:
+      operationId: courses_discussions_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - discussions
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+      - name: discussion_uuid
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/discussions/{discussion_uuid}/reactions/:
+    put:
+      operationId: courses_discussions_update_user_reactions
+      description: Update user reactions
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Reaction'
+      responses:
+        '204':
+          description: No content
+      tags:
+        - discussions
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+      - name: discussion_uuid
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/import-repository/:
+    post:
+      operationId: courses_import_repository
+      description: Imports activities from github repository.
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CourseImportRepository'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/CourseImportRepository'
+      tags:
+        - courses
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/invitations-by-token/{token}/:
+    get:
+      operationId: courses_invitations-by-token_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CourseInvitationPublic'
+      tags:
+        - course-invitations
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+      - name: token
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/invitations/:
+    get:
+      operationId: courses_invitations_list
+      description: ''
+      parameters:
+        - name: search
+          in: query
+          description: A search term.
+          required: false
+          type: string
+        - name: role
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: status
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: ordering
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/CourseInvation'
+      tags:
+        - course-invitations
+    post:
+      operationId: courses_invitations_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CourseInvitationsCreate'
+      responses:
+        '201':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CourseInvation'
+      tags:
+        - course-invitations
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/invitations/{id}/resend/:
+    put:
+      operationId: courses_invitations_resend_update
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CourseInvation'
+      tags:
+        - course-invitations
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+      - name: id
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/invitations/{uuid}/:
+    delete:
+      operationId: courses_invitations_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - course-invitations
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+      - name: uuid
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/lessons/:
+    get:
+      operationId: courses_lessons_list
+      description: ''
+      parameters:
+        - name: search
+          in: query
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/LessonList'
+      tags:
+        - lessons
+    post:
+      operationId: courses_lessons_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Lesson'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Lesson'
+      tags:
+        - lessons
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/lessons/search/:
+    get:
+      operationId: courses_lessons_search_list
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/LessonSearchList'
+      tags:
+        - lessons
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/lessons/{lesson_uuid}/:
+    get:
+      operationId: courses_lessons_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Lesson'
+      tags:
+        - lessons
+    put:
+      operationId: courses_lessons_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Lesson'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Lesson'
+      tags:
+        - lessons
+    patch:
+      operationId: courses_lessons_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Lesson'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Lesson'
+      tags:
+        - lessons
+    delete:
+      operationId: courses_lessons_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - lessons
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+      - name: lesson_uuid
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/participants/:
+    get:
+      operationId: courses_participants_list
+      description: ''
+      parameters:
+        - name: search
+          in: query
+          description: A search term.
+          required: false
+          type: string
+        - name: role
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: ordering
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/CourseParticipant'
+      tags:
+        - course-participants
+    post:
+      operationId: courses_participants_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CourseParticipantsAdd'
+      responses:
+        '201':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CourseParticipant'
+      tags:
+        - course-participants
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/participants/mention-search/:
+    get:
+      operationId: courses_participants_mention-search_list
+      description: ''
+      parameters:
+        - name: search
+          in: query
+          description: A search term.
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/CourseParticipantMention'
+      tags:
+        - course-participants
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/participants/{user_uuid}/:
+    get:
+      operationId: courses_participants_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CourseParticipantUpdate'
+      tags:
+        - course-participants
+    put:
+      operationId: courses_participants_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CourseParticipantUpdate'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CourseParticipantUpdate'
+      tags:
+        - course-participants
+    patch:
+      operationId: courses_participants_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CourseParticipantUpdate'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CourseParticipantUpdate'
+      tags:
+        - course-participants
+    delete:
+      operationId: courses_participants_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - course-participants
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+      - name: user_uuid
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/public/:
+    get:
+      operationId: courses_public
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CoursePublic'
+      tags:
+        - courses
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/publish/:
+    post:
+      operationId: courses_publish
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CourseDetail'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/CourseDetail'
+      tags:
+        - courses
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/submissions/:
+    get:
+      operationId: courses_submissions_list
+      description: ''
+      parameters:
+        - name: search
+          in: query
+          description: A search term.
+          required: false
+          type: string
+        - name: status
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: ordering
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/ActivitySubmissionList'
+      tags:
+        - submissions
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/submissions/autograde/:
+    post:
+      operationId: courses_submissions_bulk_autograde
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ActivitySubmissionBulkAutograde'
+      responses:
+        '200':
+          description: Success
+          examples:
+            application/json:
+              detail: Submissions bulk auto grading has been successfully started.
+        '400':
+          description: Error
+          examples:
+            application/json:
+              activity_submissions:
+                - Invalid pk "1e01b309-ca3d-4b3c-9cb4-57ff1afd3c52" - object does
+                  not exist.
+      tags:
+        - submissions
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/submissions/{submission_uuid}/:
+    get:
+      operationId: courses_submissions_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/ActivitySubmissionDetail'
+      tags:
+        - submissions
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+      - name: submission_uuid
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/submissions/{submission_uuid}/allow-resubmission/:
+    post:
+      operationId: courses_submissions_allow_resubmission
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: Submission has been successfully resubmitted.
+          examples:
+            application/json:
+              detail: Submission has been successfully submitted.
+        '400':
+          description: Submission cannot be submitted.
+          examples:
+            application/json:
+              detail: Submission cannot be resubmitted.
+      tags:
+        - submissions
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+      - name: submission_uuid
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/submissions/{submission_uuid}/autograde/:
+    post:
+      operationId: courses_submissions_autograde
+      description: ''
+      parameters: []
+      responses:
+        '202':
+          description: Submission auto grading has been successfully started.
+          examples:
+            application/json:
+              detail: Submission auto grading has been successfully started.
+        '400':
+          description: Submission cannot be auto graded.
+          examples:
+            application/json:
+              detail: Submission cannot be auto graded.
+      tags:
+        - submissions
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+      - name: submission_uuid
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/submissions/{submission_uuid}/cell-submissions/:
+    get:
+      operationId: courses_submissions_cell-submissions_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/ActivityCellSubmissionList'
+      tags:
+        - submissions
+    post:
+      operationId: courses_submissions_cell-submissions_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ActivityCellSubmissionCreate'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/ActivityCellSubmissionDetail'
+      tags:
+        - submissions
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+      - name: submission_uuid
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/submissions/{submission_uuid}/cell-submissions/execution-state/:
+    get:
+      operationId: courses_submissions_cell-submissions_cell_submissions_execution_state
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/CellsExecutionState'
+        '404':
+          description: 'Error: Not Found'
+          examples:
+            application/json:
+              detail: Not found.
+      tags:
+        - submissions
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+      - name: submission_uuid
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/submissions/{submission_uuid}/cell-submissions/{cell_submission_uuid}/:
+    put:
+      operationId: courses_submissions_cell-submissions_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ActivityCellSubmissionUpdate'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/ActivityCellSubmissionDetail'
+      tags:
+        - submissions
+    patch:
+      operationId: courses_submissions_cell-submissions_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ActivityCellSubmissionUpdate'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/ActivityCellSubmissionDetail'
+      tags:
+        - submissions
+    parameters:
+      - name: cell_submission_uuid
+        in: path
+        required: true
+        type: string
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+      - name: submission_uuid
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/submissions/{submission_uuid}/complete/:
+    post:
+      operationId: courses_submissions_complete
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: The activity submission has successfully been completed.
+          examples:
+            application/json:
+              detail: The activity submission has successfully been completed.
+        '400':
+          description: Submission cannot be completed.
+          examples:
+            application/json:
+              detail: Submission cannot be completed.
+      tags:
+        - submissions
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+      - name: submission_uuid
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/submissions/{submission_uuid}/mark-viewed/:
+    post:
+      operationId: courses_submissions_mark_as_viewed
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: Submission has been successfully submitted.
+          examples:
+            application/json:
+              detail: Submission has been successfully submitted.
+        '400':
+          description: Submission cannot be submitted.
+          examples:
+            application/json:
+              detail: Submission cannot be submitted.
+      tags:
+        - submissions
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+      - name: submission_uuid
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/submissions/{submission_uuid}/submit/:
+    post:
+      operationId: courses_submissions_submit
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: Submission has been successfully submitted.
+          examples:
+            application/json:
+              detail: Submission has been successfully submitted.
+        '400':
+          description: Submission cannot be submitted.
+          examples:
+            application/json:
+              detail: Submission cannot be submitted.
+      tags:
+        - submissions
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+      - name: submission_uuid
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/submissions/{submission_uuid}/validate/:
+    post:
+      operationId: courses_submissions_validate
+      description: ''
+      parameters: []
+      responses:
+        '202':
+          description: Success
+          examples:
+            application/json:
+              detail: Validation has been successfully started.
+        '423':
+          description: Failure
+          examples:
+            application/json:
+              detail: Resource is locked.
+              code: resource_locked
+      tags:
+        - submissions
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+      - name: submission_uuid
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/submissions/{submission_uuid}/validation-results/:
+    get:
+      operationId: courses_submissions_validation_results
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          examples:
+            application/json:
+              detail: Validation results returned.
+        '423':
+          description: Failure
+          examples:
+            application/json:
+              detail: Resource is locked.
+              code: resource_locked
+      tags:
+        - submissions
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+      - name: submission_uuid
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/threads/:
+    post:
+      operationId: courses_threads_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ThreadCreate'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/ThreadCreate'
+      tags:
+        - discussions
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/threads/{thread_uuid}/:
+    get:
+      operationId: courses_threads_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/ThreadRead'
+      tags:
+        - discussions
+    put:
+      operationId: courses_threads_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Thread'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Thread'
+      tags:
+        - discussions
+    patch:
+      operationId: courses_threads_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Thread'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Thread'
+      tags:
+        - discussions
+    delete:
+      operationId: courses_threads_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - discussions
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+      - name: thread_uuid
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/threads/{thread_uuid}/reactions/:
+    put:
+      operationId: courses_threads_update_user_reactions
+      description: Update user reactions
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Reaction'
+      responses:
+        '204':
+          description: No content
+      tags:
+        - discussions
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+      - name: thread_uuid
+        in: path
+        required: true
+        type: string
+  /courses/{course_slug}/unpublish/:
+    post:
+      operationId: courses_unpublish
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CourseDetail'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/CourseDetail'
+      tags:
+        - courses
+    parameters:
+      - name: course_slug
+        in: path
+        required: true
+        type: string
+  /info/choices/:
+    get:
+      operationId: info_choices_list
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - info
+    parameters: []
+  /lti/complete-launch/:
+    post:
+      operationId: lti_complete-launch_create
+      description: ''
+      parameters: []
+      responses:
+        '201':
+          description: ''
+      tags:
+        - lti
+    parameters: []
+  /lti/config/{issuer}/:
+    get:
+      operationId: lti_config_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - lti
+    parameters:
+      - name: issuer
+        in: path
+        required: true
+        type: string
+  /notifications/:
+    get:
+      operationId: notifications_list
+      description: ''
+      parameters:
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/Notification'
+      tags:
+        - notifications
+    parameters: []
+  /notifications/count/:
+    get:
+      operationId: notifications_count_list
+      description: ''
+      parameters:
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: Notification count.
+          schema:
+            required:
+              - unread
+            type: object
+            properties:
+              unread:
+                type: integer
+          examples:
+            application/json:
+              unread: 5
+      tags:
+        - notifications
+    parameters: []
+  /notifications/mark-read/:
+    post:
+      operationId: notifications_mark-read_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/NotificationIds'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/NotificationIds'
+      tags:
+        - notifications
+    parameters: []
+  /payments/invoice-url/:
+    post:
+      operationId: payments_invoice-url_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Invoice'
+      responses:
+        '200':
+          description: Invoice url returned.
+          schema:
+            required:
+              - url
+            type: object
+            properties:
+              url:
+                type: string
+                format: uri
+          examples:
+            application/json:
+              url: https://example.com
+      tags:
+        - payments
+    parameters: []
+  /payments/stripe-checkout-session/:
+    post:
+      operationId: payments_stripe-checkout-session_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CreateCheckoutSession'
+      responses:
+        '201':
+          description: Checkout session created.
+          schema:
+            required:
+              - url
+            type: object
+            properties:
+              url:
+                type: string
+                format: uri
+          examples:
+            application/json:
+              url: https://example.com
+      tags:
+        - payments
+    parameters: []
+  /payments/stripe-customer-portal-session/:
+    post:
+      operationId: payments_stripe-customer-portal-session_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CreateStriperCustomerPortalSession'
+      responses:
+        '201':
+          description: Customer portal session created.
+          schema:
+            required:
+              - url
+            type: object
+            properties:
+              url:
+                type: string
+                format: uri
+          examples:
+            application/json:
+              url: https://example.com
+      tags:
+        - payments
+    parameters: []
+  /subscriptions/plans/:
+    get:
+      operationId: subscriptions_plans_list
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Plan'
+      tags:
+        - subscriptions
+    parameters: []
+  /worker-gateway/check-history/:
+    post:
+      operationId: worker-gateway_check-history_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/WorkerCheckHistory'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/WorkerCheckHistoryResult'
+      tags:
+        - worker-gateway
+    parameters: []
+  /worker-gateway/execute-code/:
+    post:
+      operationId: worker-gateway_execute-code_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/WorkerExecuteCode'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/ExecuteCodeResult'
+        '202':
+          description: Accepted a process to start worker.
+          schema:
+            required:
+              - worker_id
+            type: object
+            properties:
+              worker_id:
+                type: string
+                format: uuid
+          examples:
+            application/json:
+              worker_id: 709c740f-b44d-4e8b-9e1f-0c4de784f0a6
+      tags:
+        - worker-gateway
+    parameters: []
+  /worker-gateway/execute-codes/:
+    post:
+      operationId: worker-gateway_execute-codes_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/WorkerExecuteCodes'
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ExecuteCodesResult'
+        '202':
+          description: Accepted a process to start worker.
+          schema:
+            required:
+              - worker_id
+            type: object
+            properties:
+              worker_id:
+                type: string
+                format: uuid
+          examples:
+            application/json:
+              worker_id: 709c740f-b44d-4e8b-9e1f-0c4de784f0a6
+      tags:
+        - worker-gateway
+    parameters: []
+  /worker-gateway/restart/:
+    post:
+      operationId: worker-gateway_restart_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Worker'
+      responses:
+        '202':
+          description: Accepted a process to restart worker.
+          schema:
+            $ref: '#/definitions/Worker'
+      tags:
+        - worker-gateway
+    parameters: []
+  /worker-gateway/start/:
+    post:
+      operationId: worker-gateway_start_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Worker'
+      responses:
+        '200':
+          description: Worker started.
+          schema:
+            required:
+              - worker_id
+            type: object
+            properties:
+              worker_id:
+                type: string
+                format: uuid
+          examples:
+            application/json:
+              worker_id: 709c740f-b44d-4e8b-9e1f-0c4de784f0a6
+        '202':
+          description: Accepted a process to start worker.
+          schema:
+            required:
+              - worker_id
+            type: object
+            properties:
+              worker_id:
+                type: string
+                format: uuid
+          examples:
+            application/json:
+              worker_id: 709c740f-b44d-4e8b-9e1f-0c4de784f0a6
+      tags:
+        - worker-gateway
+    parameters: []
+  /worker-gateway/stop-worker/all/:
+    post:
+      operationId: worker-gateway_stop-worker_all_create
+      description: ''
+      parameters: []
+      responses:
+        '201':
+          description: ''
+      tags:
+        - worker-gateway
+    parameters: []
+  /worker-gateway/stop-worker/{worker_id}/:
+    post:
+      operationId: worker-gateway_stop-worker_create
+      description: ''
+      parameters: []
+      responses:
+        '201':
+          description: ''
+      tags:
+        - worker-gateway
+    parameters:
+      - name: worker_id
+        in: path
+        required: true
+        type: string
+  /worker-gateway/stop/:
+    post:
+      operationId: worker-gateway_stop_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Worker'
+      responses:
+        '202':
+          description: Accepted a process to stop worker.
+          schema:
+            $ref: '#/definitions/Worker'
+      tags:
+        - worker-gateway
+    parameters: []
+  /worker-gateway/workers/:
+    get:
+      operationId: worker-gateway_workers_list
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - worker-gateway
+    parameters: []
+  /worker-gateway/workers/status/{activity_id}/:
+    get:
+      operationId: worker-gateway_workers_status_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - worker-gateway
+    parameters:
+      - name: activity_id
+        in: path
+        required: true
+        type: string
+  /worker-gateway/workers/{worker_id}/status/:
+    get:
+      operationId: worker-gateway_workers_status_list
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags:
+        - worker-gateway
+    parameters:
+      - name: worker_id
+        in: path
+        required: true
+        type: string
+definitions:
+  AuthorizationComplete:
+    required:
+      - code
+    type: object
+    properties:
+      code:
+        title: Code
+        description: Authorization code to exchange it for an access_token.
+        type: string
+        minLength: 1
+  UserProfile:
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      email:
+        title: Email
+        type: string
+        readOnly: true
+      first_name:
+        title: First name
+        type: string
+        maxLength: 150
+      last_name:
+        title: Last name
+        type: string
+        maxLength: 150
+      avatar_url:
+        title: Avatar url
+        type: string
+        readOnly: true
+      can_change_auth0_password:
+        title: Can change auth0 password
+        type: string
+        readOnly: true
+      has_payment_methods:
+        title: Has payment methods
+        type: string
+        readOnly: true
+      email_verified:
+        title: Email verified
+        type: string
+        readOnly: true
+  AuthorizationCompleteResponse:
+    required:
+      - user
+    type: object
+    properties:
+      user:
+        $ref: '#/definitions/UserProfile'
+      token:
+        title: Token
+        description: JSON Web Token.
+        type: string
+        readOnly: true
+  AuthorizationURL:
+    type: object
+    properties:
+      url:
+        title: Url
+        description: URL to redirect the customer's web browser to make an authorization
+          request.
+        type: string
+        readOnly: true
+  SendVerificationEmail:
+    required:
+      - user_id
+    type: object
+    properties:
+      user_id:
+        title: User id
+        type: string
+        pattern: ^auth0\|\w+$
+        minLength: 1
+  ChangePassword:
+    required:
+      - new_password
+      - confirm_new_password
+    type: object
+    properties:
+      new_password:
+        title: New password
+        type: string
+        maxLength: 128
+        minLength: 1
+      confirm_new_password:
+        title: Confirm new password
+        type: string
+        maxLength: 128
+        minLength: 1
+  ConfirmResetPassword:
+    required:
+      - password
+      - signature
+    type: object
+    properties:
+      password:
+        title: Password
+        type: string
+        maxLength: 128
+        minLength: 1
+      signature:
+        title: Signature
+        type: string
+        maxLength: 150
+        minLength: 1
+  UserCourse:
+    required:
+      - course
+      - role
+    type: object
+    properties:
+      course:
+        title: Course
+        type: string
+        format: uuid
+      role:
+        title: Role
+        type: string
+        enum:
+          - student
+          - instructor
+  CreateTestUser:
+    required:
+      - email
+      - courses
+    type: object
+    properties:
+      email:
+        title: Email
+        type: string
+        format: email
+        maxLength: 128
+        minLength: 1
+      first_name:
+        title: First name
+        type: string
+        maxLength: 30
+        minLength: 1
+      last_name:
+        title: Last name
+        type: string
+        maxLength: 30
+        minLength: 1
+      courses:
+        type: array
+        items:
+          $ref: '#/definitions/UserCourse'
+  ForgotSubdomain:
+    required:
+      - email
+    type: object
+    properties:
+      email:
+        title: Email
+        type: string
+        format: email
+        minLength: 1
+  AccountNotificationPreferences:
+    required:
+      - preferences
+    type: object
+    properties:
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+      email_notifications:
+        title: Email notifications
+        type: boolean
+      preferences:
+        title: Preferences
+        type: object
+        additionalProperties:
+          type: boolean
+  AccountRegistration:
+    required:
+      - email
+      - password
+      - first_name
+      - last_name
+      - campus_title
+    type: object
+    properties:
+      email:
+        title: Email
+        type: string
+        format: email
+        maxLength: 255
+        minLength: 1
+      password:
+        title: Password
+        type: string
+        maxLength: 128
+        minLength: 1
+      first_name:
+        title: First name
+        type: string
+        maxLength: 150
+        minLength: 1
+      last_name:
+        title: Last name
+        type: string
+        maxLength: 150
+        minLength: 1
+      campus_title:
+        title: Campus title
+        type: string
+        maxLength: 150
+        minLength: 1
+      campus_slug:
+        title: Campus slug
+        type: string
+        pattern: ^[-a-zA-Z0-9]+$
+        maxLength: 160
+        minLength: 3
+        x-nullable: true
+  VerifyEmail:
+    required:
+      - signature
+    type: object
+    properties:
+      signature:
+        title: Signature
+        type: string
+        maxLength: 150
+        minLength: 1
+  CampusCustomStyle:
+    type: object
+    properties:
+      logotype:
+        title: Logotype
+        type: string
+        readOnly: true
+        x-nullable: true
+        format: uri
+  CampusList:
+    required:
+      - title
+      - custom_style
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      slug:
+        title: Slug
+        type: string
+        format: slug
+        pattern: ^[-a-zA-Z0-9_]+$
+        maxLength: 160
+        minLength: 3
+      title:
+        title: Campus name
+        type: string
+        maxLength: 150
+        minLength: 3
+      custom_style:
+        $ref: '#/definitions/CampusCustomStyle'
+      current_user_role:
+        title: Current user role
+        type: string
+        enum:
+          - admin
+          - member
+        readOnly: true
+        x-nullable: true
+      is_owner:
+        title: Is owner
+        type: boolean
+        readOnly: true
+      subscription_status:
+        title: Subscription status
+        type: string
+        readOnly: true
+      course_user_role:
+        title: Course user role
+        type: string
+        readOnly: true
+  CampusWorkerResources:
+    type: object
+    properties:
+      worker_cpu_quantity:
+        title: Worker cpu quantity
+        type: string
+        enum:
+          - 300m
+          - 500m
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+          - '6'
+          - '7'
+          - '8'
+          - '9'
+          - '10'
+          - '12'
+          - '20'
+      worker_memory_quantity:
+        title: Worker memory quantity
+        type: string
+        enum:
+          - 128Mi
+          - 256Mi
+          - 512Mi
+          - 1Gi
+          - 2Gi
+          - 3Gi
+          - 4Gi
+          - 5Gi
+          - 6Gi
+          - 7Gi
+          - 8Gi
+          - 9Gi
+          - 10Gi
+          - 15Gi
+          - 20Gi
+    x-nullable: true
+  Campus:
+    required:
+      - title
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      title:
+        title: Campus name
+        type: string
+        maxLength: 150
+        minLength: 3
+      slug:
+        title: Slug
+        type: string
+        pattern: ^[-a-zA-Z0-9]+$
+        maxLength: 160
+        minLength: 3
+        x-nullable: true
+      short_intro:
+        title: Short intro
+        type: string
+      description:
+        title: Description
+        type: string
+      phone_number:
+        title: Phone number
+        type: string
+        maxLength: 255
+      email:
+        title: Email
+        type: string
+        maxLength: 255
+      address:
+        title: Address
+        type: string
+        maxLength: 255
+      current_user_role:
+        title: Current user role
+        type: string
+        enum:
+          - admin
+          - member
+        readOnly: true
+        x-nullable: true
+      course_user_role:
+        title: Course user role
+        type: string
+        readOnly: true
+      is_owner:
+        title: Is owner
+        type: boolean
+        readOnly: true
+      subscription:
+        title: Subscription
+        type: string
+        readOnly: true
+      custom_style:
+        $ref: '#/definitions/CampusCustomStyle'
+      worker_resources:
+        $ref: '#/definitions/CampusWorkerResources'
+      featured_courses:
+        type: array
+        items:
+          type: string
+          format: uuid
+  CampusGenerateSlug:
+    required:
+      - title
+    type: object
+    properties:
+      title:
+        title: Title
+        type: string
+        maxLength: 150
+        minLength: 3
+  CampusInvitationAccept:
+    required:
+      - token
+    type: object
+    properties:
+      token:
+        title: Token
+        type: string
+        maxLength: 32
+        minLength: 1
+      password:
+        title: Password
+        type: string
+        maxLength: 128
+        minLength: 1
+      first_name:
+        title: First name
+        type: string
+        maxLength: 150
+        minLength: 1
+      last_name:
+        title: Last name
+        type: string
+        maxLength: 150
+        minLength: 1
+  CampusPublic:
+    required:
+      - title
+      - custom_style
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      slug:
+        title: Slug
+        type: string
+        format: slug
+        pattern: ^[-a-zA-Z0-9_]+$
+        maxLength: 160
+        minLength: 3
+      title:
+        title: Campus name
+        type: string
+        maxLength: 150
+        minLength: 3
+      phone_number:
+        title: Phone number
+        type: string
+        maxLength: 255
+      email:
+        title: Email
+        type: string
+        maxLength: 255
+      address:
+        title: Address
+        type: string
+        maxLength: 255
+      custom_style:
+        $ref: '#/definitions/CampusCustomStyle'
+  CoursePublicList:
+    required:
+      - name
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 150
+        minLength: 1
+      slug:
+        title: Slug
+        type: string
+        format: slug
+        pattern: ^[-a-zA-Z0-9_]+$
+        maxLength: 175
+      short_intro:
+        title: Short intro
+        type: string
+      is_featured:
+        title: Is featured
+        type: boolean
+      lesson_count:
+        title: Lesson count
+        type: integer
+        readOnly: true
+      student_count:
+        title: Student count
+        type: integer
+        readOnly: true
+      activity_count:
+        title: Activity count
+        type: integer
+        readOnly: true
+  CampusValidateSlug:
+    required:
+      - slug
+    type: object
+    properties:
+      slug:
+        title: Slug
+        type: string
+        pattern: ^[-a-zA-Z0-9]+$
+        maxLength: 160
+        minLength: 1
+  BaseImage:
+    required:
+      - title
+      - description
+      - type
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      title:
+        title: Title
+        type: string
+        maxLength: 150
+        minLength: 1
+      description:
+        title: Description
+        type: string
+        minLength: 1
+      type:
+        title: Type
+        type: string
+        enum:
+          - lambda
+          - jupyter
+      language:
+        title: Language
+        type: string
+        enum:
+          - python
+          - julia
+          - ir
+      language_display:
+        title: Language display
+        type: string
+        readOnly: true
+      is_built:
+        title: Is built
+        type: boolean
+      is_available:
+        title: Is available
+        type: string
+        readOnly: true
+  CourseList:
+    required:
+      - name
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 150
+        minLength: 1
+      slug:
+        title: Slug
+        type: string
+        format: slug
+        pattern: ^[-a-zA-Z0-9_]+$
+        maxLength: 175
+      short_intro:
+        title: Short intro
+        type: string
+      description:
+        title: Description
+        type: string
+      status:
+        title: Status
+        type: string
+        enum:
+          - unpublished
+          - published
+        readOnly: true
+      status_display:
+        title: Status display
+        type: string
+        readOnly: true
+      has_mandatory_sequence:
+        title: Has mandatory sequence
+        type: boolean
+      current_user_role:
+        title: Current user role
+        type: string
+        enum:
+          - student
+          - instructor
+        readOnly: true
+      is_featured:
+        title: Is featured
+        type: boolean
+      lesson_count:
+        title: Lesson count
+        type: integer
+        readOnly: true
+      student_count:
+        title: Student count
+        type: integer
+        readOnly: true
+      activity_count:
+        title: Activity count
+        type: integer
+        readOnly: true
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+  CourseCreate:
+    required:
+      - name
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 150
+        minLength: 1
+      slug:
+        title: Slug
+        type: string
+        format: slug
+        pattern: ^[-a-zA-Z0-9_]+$
+        maxLength: 175
+      short_intro:
+        title: Short intro
+        type: string
+      description:
+        title: Description
+        type: string
+      status:
+        title: Status
+        type: string
+        enum:
+          - unpublished
+          - published
+        readOnly: true
+      deployment_id:
+        title: Deployment id
+        type: string
+        maxLength: 128
+        x-nullable: true
+      has_mandatory_sequence:
+        title: Has mandatory sequence
+        type: boolean
+      template:
+        title: Template
+        type: string
+        format: uuid
+        x-nullable: true
+      current_user_role:
+        title: Current user role
+        type: string
+        enum:
+          - student
+          - instructor
+        readOnly: true
+      has_lti_integrations:
+        title: Has lti integrations
+        type: boolean
+        readOnly: true
+      lti_client_id:
+        title: Lti client id
+        type: string
+        readOnly: true
+        minLength: 1
+      first_activity_slug:
+        title: First activity slug
+        type: string
+        readOnly: true
+        minLength: 1
+  CourseGenerateSlug:
+    required:
+      - title
+    type: object
+    properties:
+      title:
+        title: Title
+        type: string
+        maxLength: 150
+        minLength: 1
+  LessonSearchList:
+    required:
+      - title
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      title:
+        title: Title
+        type: string
+        maxLength: 150
+        minLength: 1
+  CourseLessonSearchList:
+    required:
+      - name
+      - lessons
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 150
+        minLength: 1
+      slug:
+        title: Slug
+        type: string
+        format: slug
+        pattern: ^[-a-zA-Z0-9_]+$
+        maxLength: 175
+      lessons:
+        type: array
+        items:
+          $ref: '#/definitions/LessonSearchList'
+  CampusCustomDomain:
+    required:
+      - domain
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      domain:
+        title: Domain
+        type: string
+        maxLength: 255
+        minLength: 1
+      status:
+        title: Status
+        type: string
+        enum:
+          - needs_manual_actions
+          - pending_verification
+          - verified
+          - failed
+        readOnly: true
+      cname_record:
+        title: Cname record
+        type: object
+        readOnly: true
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+  CampusEmailProvider:
+    required:
+      - from_email
+      - host
+      - port
+      - username
+      - password
+    type: object
+    properties:
+      from_email:
+        title: From email
+        type: string
+        maxLength: 255
+        minLength: 1
+      host:
+        title: Host
+        description: Hostname or IP address of your SMTP server.
+        type: string
+        maxLength: 255
+        minLength: 1
+      port:
+        title: Port
+        description: Common ports include 25, 465, 587 and 2525.
+        type: integer
+        maximum: 32767
+        minimum: 0
+      username:
+        title: Username
+        type: string
+        maxLength: 255
+        minLength: 1
+      password:
+        title: Password
+        type: string
+        maxLength: 255
+        minLength: 1
+    x-nullable: true
+  CampusEmailSettings:
+    type: object
+    properties:
+      use_own_email_provider:
+        title: Use own email provider
+        type: boolean
+      email_provider:
+        $ref: '#/definitions/CampusEmailProvider'
+  CampusInvitationPublic:
+    required:
+      - email
+    type: object
+    properties:
+      email:
+        title: Email
+        type: string
+        format: email
+        maxLength: 254
+        minLength: 1
+      user_exists:
+        title: User exists
+        type: string
+        readOnly: true
+      campus_slug:
+        title: Campus slug
+        type: string
+        readOnly: true
+  Login:
+    required:
+      - email
+      - password
+    type: object
+    properties:
+      email:
+        title: Email
+        type: string
+        format: email
+        minLength: 1
+      password:
+        title: Password
+        type: string
+        maxLength: 128
+        minLength: 1
+  LTIIntegration:
+    required:
+      - issuer
+      - client_id
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      issuer:
+        title: Issuer
+        type: string
+        enum:
+          - canvas
+      client_id:
+        title: Client id
+        description: Value provided by LTI 1.3 Platform
+        type: string
+        maxLength: 255
+        minLength: 1
+  CampusMember:
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      email:
+        title: Email
+        type: string
+        readOnly: true
+      first_name:
+        title: First name
+        type: string
+        maxLength: 150
+      last_name:
+        title: Last name
+        type: string
+        maxLength: 150
+      avatar_url:
+        title: Avatar url
+        type: string
+        readOnly: true
+      role:
+        title: Role
+        type: string
+        enum:
+          - admin
+          - member
+        readOnly: true
+      is_owner:
+        title: Is owner
+        type: string
+        readOnly: true
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+  CampusMemberUpdate:
+    required:
+      - role
+    type: object
+    properties:
+      role:
+        title: Role
+        type: string
+        enum:
+          - admin
+          - member
+  UserAccountNotification:
+    required:
+      - email
+    type: object
+    properties:
+      email:
+        title: Email address
+        type: string
+        format: email
+        maxLength: 254
+        minLength: 1
+      first_name:
+        title: First name
+        type: string
+        maxLength: 150
+      last_name:
+        title: Last name
+        type: string
+        maxLength: 150
+      avatar_url:
+        title: Avatar url
+        type: string
+        readOnly: true
+  Notification:
+    required:
+      - uuid
+      - type
+      - is_read
+      - created
+      - from_user
+      - context_data
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+      type:
+        title: Type
+        type: string
+        enum:
+          - campus_invitation
+          - course_invitation
+          - course_published
+          - activity_published
+          - activity_submission_completed
+          - activity_submission_needs_manual_grading
+          - thread_added
+          - comment_added
+          - mention_added
+          - reaction_added
+      is_read:
+        title: Is read
+        type: boolean
+      created:
+        title: Created
+        type: string
+        format: date-time
+      from_user:
+        $ref: '#/definitions/UserAccountNotification'
+      context_data:
+        title: Context data
+        type: object
+  NotificationIds:
+    type: object
+    properties:
+      ids:
+        type: array
+        items:
+          type: string
+          format: uuid
+        x-nullable: true
+  ResetPassword:
+    required:
+      - email
+    type: object
+    properties:
+      email:
+        title: Email
+        type: string
+        format: email
+        minLength: 1
+  CampusTestEmailProvider:
+    required:
+      - from_email
+      - host
+      - port
+      - username
+      - password
+    type: object
+    properties:
+      from_email:
+        title: From email
+        type: string
+        maxLength: 255
+        minLength: 1
+      host:
+        title: Host
+        type: string
+        maxLength: 255
+        minLength: 1
+      port:
+        title: Port
+        type: integer
+      username:
+        title: Username
+        type: string
+        maxLength: 255
+        minLength: 1
+      password:
+        title: Password
+        type: string
+        maxLength: 255
+        minLength: 1
+  PlanFeature:
+    required:
+      - title
+      - type
+      - unit_label
+      - quantity
+    type: object
+    properties:
+      title:
+        title: Title
+        type: string
+        minLength: 1
+      type:
+        title: Type
+        type: string
+        minLength: 1
+      unit_label:
+        title: Unit label
+        type: string
+        minLength: 1
+      quantity:
+        title: Quantity
+        type: integer
+  CampusPlan:
+    required:
+      - title
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      title:
+        title: Title
+        type: string
+        maxLength: 30
+        minLength: 1
+      description:
+        title: Description
+        type: string
+        maxLength: 255
+      icon:
+        title: Icon
+        type: string
+        enum:
+          - bold
+          - insert-link
+          - italic
+          - paragraph-indent
+          - paragraph-orderedList
+          - paragraph-unorderedList
+          - paragraph-outdent
+          - strike-through
+          - underline
+          - academic-cap
+          - adjustments
+          - annotation-comment
+          - archive
+          - arrow-circle-down
+          - arrow-circle-left
+          - arrow-circle-right
+          - arrow-circle-up
+          - arrow-down
+          - arrow-left
+          - arrow-narrow-down
+          - arrow-narrow-left
+          - arrow-narrow-right
+          - arrow-narrow-up
+          - arrows-expand
+          - arrow-up
+          - at-symbol
+          - backspace
+          - badge-check
+          - ban
+          - beaker
+          - bell
+          - bookmark
+          - bookmark-alt
+          - book-open
+          - briefcase
+          - cake
+          - calculator
+          - calendar
+          - camera
+          - cash
+          - chart-bar
+          - chart-pie
+          - chart-square-bar
+          - chat
+          - chat-alt
+          - chat-alt-2
+          - check
+          - check-circle
+          - chevron-double-down
+          - chevron-double-left
+          - chevron-double-right
+          - chevron-double-up
+          - chevron-down
+          - chevron-left
+          - chevron-right
+          - chevron-up
+          - chip
+          - clipboard
+          - clipboard-check
+          - clipboard-copy
+          - clipboard-list
+          - clock
+          - close
+          - cloud
+          - cloud-download
+          - cloud-upload
+          - code
+          - cog
+          - collection
+          - color-swatch
+          - credit-card
+          - cube
+          - cube-transparent
+          - currency-bangladeshi
+          - currency-dollar
+          - currency-euro
+          - currency-pound
+          - currency-rupee
+          - currency-yen
+          - cursor-click
+          - database
+          - desktop-computer
+          - device-mobile
+          - device-tablet
+          - document
+          - document-add
+          - document-download
+          - document-duplicate
+          - document-remove
+          - document-report
+          - document-search
+          - document-text
+          - dots-circle-horizontal
+          - dots-horizontal
+          - dots-vertical
+          - dots-rearrange
+          - download
+          - duplicate
+          - emoji-happy
+          - emoji-sad
+          - exclamation
+          - exclamation-circle
+          - external-link
+          - eye
+          - eye_off
+          - fast-forward
+          - film
+          - filter
+          - finger-print
+          - fire
+          - flag
+          - folder
+          - folder-add
+          - folder-download
+          - folder-open
+          - folder-remove
+          - gift
+          - globe
+          - globe-all
+          - hand
+          - hashtag
+          - heart
+          - home
+          - identification
+          - import
+          - inbox
+          - inbox_in
+          - information-circle
+          - key
+          - library
+          - light-bulb
+          - lightning-bolt
+          - link
+          - location-marker
+          - lock-closed
+          - lock-open
+          - login
+          - logout
+          - mail
+          - mail-open
+          - map
+          - menu
+          - menu-alt-1
+          - menu-alt-2
+          - menu-alt-3
+          - menu-alt-4
+          - microphone
+          - minus
+          - minus-circle
+          - moon
+          - music-note
+          - newspaper
+          - organization
+          - paper-airplane
+          - paper-clip
+          - pause
+          - pencil
+          - pencil-alt
+          - phone
+          - phone-incoming
+          - phone-missed-call
+          - phone-outgoing
+          - photograph
+          - play
+          - play-hover
+          - plus-add
+          - plus-circle
+          - preloader
+          - presentation-chart-bar
+          - presentation-chart-line
+          - printer
+          - publish
+          - puzzle
+          - qrcode
+          - question-mark-circle
+          - receipt-refund
+          - receipt-tax
+          - redo
+          - redo-1
+          - refresh
+          - reply
+          - rewind
+          - rss
+          - save
+          - save-as
+          - scale
+          - scissors
+          - search
+          - search-circle
+          - selector
+          - server
+          - share
+          - shield-check
+          - shield-exclamation
+          - shopping-bag
+          - shopping-cart
+          - sort-ascending
+          - sort-descending
+          - sparkles
+          - speakerphone
+          - star
+          - status-offline
+          - status-online
+          - stop
+          - sun
+          - support
+          - switch-horizontal
+          - switch-vertical
+          - table
+          - tag
+          - template
+          - terminal
+          - thumb-down
+          - thumb-up
+          - ticket
+          - translate
+          - trash
+          - trending-down
+          - trending-up
+          - truck
+          - undo
+          - undo-1
+          - upload
+          - user
+          - user-add-invite
+          - user-circle
+          - user-group
+          - user-remove
+          - users
+          - variable
+          - video-camera
+          - view-boards
+          - view-grid
+          - view-grid-add
+          - view-list
+          - volume-off
+          - volume-up
+          - wifi
+          - x-circle
+          - zoom-in
+          - zoom-out
+          - behance
+          - dribbble
+          - facebook
+          - github
+          - gitlab
+          - google
+          - instagram
+          - linkedin
+          - line
+          - meta
+          - pinterest
+          - snapchat
+          - spotify
+          - telegram
+          - tiktok
+          - tinder
+          - twitter
+          - vimeo
+          - whatsapp
+          - youtube
+          - addline
+          - unpublish
+          - user-profile
+          - campus
+      features:
+        $ref: '#/definitions/PlanFeature'
+  CampusSubscription:
+    required:
+      - plan
+    type: object
+    properties:
+      status:
+        title: Status
+        type: string
+        enum:
+          - active
+          - incomplete
+          - failed
+          - canceled
+          - trialing
+      next_payment_date:
+        title: Next payment date
+        type: string
+        readOnly: true
+      trial_end:
+        title: Trial end
+        type: string
+        readOnly: true
+      plan:
+        $ref: '#/definitions/CampusPlan'
+      method_info:
+        title: Method info
+        type: object
+        additionalProperties:
+          type: string
+          x-nullable: true
+        readOnly: true
+  Subscribe:
+    type: object
+    properties:
+      price:
+        title: Price
+        type: string
+        format: uuid
+      stripe_payment_method_id:
+        title: Stripe payment method id
+        type: string
+        minLength: 1
+      stripe_session_id:
+        title: Stripe session id
+        type: string
+        minLength: 1
+      clear_surplus_instructors:
+        title: Clear surplus instructors
+        type: boolean
+        default: false
+  RequestSurplusInstructors:
+    required:
+      - price
+    type: object
+    properties:
+      price:
+        title: Price
+        type: string
+        format: uuid
+  CourseTemplateList:
+    required:
+      - name
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 150
+        minLength: 1
+      short_intro:
+        title: Short intro
+        type: string
+      description:
+        title: Description
+        type: string
+      lessons_count:
+        title: Lessons count
+        type: integer
+        readOnly: true
+      activities_count:
+        title: Activities count
+        type: integer
+        readOnly: true
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+  CampusInvitation:
+    required:
+      - email
+      - role
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      email:
+        title: Email
+        type: string
+        format: email
+        maxLength: 254
+        minLength: 1
+      status:
+        title: Status
+        type: string
+        readOnly: true
+      role:
+        title: Role
+        type: string
+        enum:
+          - admin
+          - member
+  InviteUserCreate:
+    required:
+      - email
+      - role
+    type: object
+    properties:
+      email:
+        title: Email
+        type: string
+        format: email
+        maxLength: 254
+        minLength: 1
+      role:
+        title: Role
+        type: string
+        enum:
+          - admin
+  CampusInvitations:
+    required:
+      - invitations
+    type: object
+    properties:
+      invitations:
+        type: array
+        items:
+          $ref: '#/definitions/InviteUserCreate'
+  AIChatMessage:
+    required:
+      - prompt
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      prompt:
+        title: Prompt
+        type: string
+        minLength: 1
+      response_content:
+        title: Response content
+        type: string
+        readOnly: true
+      created:
+        title: Created
+        type: string
+        format: date-time
+        readOnly: true
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+  ChatCompletionMetadata:
+    required:
+      - questions_number
+      - answers_number
+    type: object
+    properties:
+      questions_number:
+        title: Questions number
+        type: integer
+        minimum: 1
+      answers_number:
+        title: Answers number
+        type: integer
+        minimum: 1
+      response_format:
+        title: Response format
+        type: string
+        maxLength: 2048
+        minLength: 1
+      subtype:
+        title: Subtype
+        type: string
+        maxLength: 50
+        minLength: 1
+  ChatCompletionRequestCreate:
+    required:
+      - question
+    type: object
+    properties:
+      question:
+        title: Question
+        type: string
+        maxLength: 3000
+        minLength: 1
+      type:
+        title: Type
+        type: string
+        enum:
+          - prompt
+          - unittest
+          - quiz
+        default: prompt
+      metadata:
+        $ref: '#/definitions/ChatCompletionMetadata'
+      is_favorite:
+        title: Is favorite
+        type: boolean
+        default: false
+      is_recent:
+        title: Is recent
+        type: boolean
+        default: true
+      chat_id:
+        title: Chat id
+        type: string
+        format: uuid
+  ChatCompletionRequest:
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      chat_id:
+        title: Chat id
+        type: string
+        readOnly: true
+        minLength: 1
+      answer:
+        title: Answer
+        type: string
+        readOnly: true
+      is_favorite:
+        title: Is favorite
+        type: boolean
+  ChatCompletionRequestList:
+    type: object
+    properties:
+      chat_id:
+        title: Chat id
+        type: string
+        readOnly: true
+        minLength: 1
+      prompt:
+        title: Prompt
+        type: string
+      is_favorite:
+        title: Is favorite
+        type: boolean
+      type:
+        title: Type
+        type: string
+        enum:
+          - prompt
+          - unittest
+          - quiz
+      metadata:
+        title: Metadata
+        type: object
+  ChatCompletionRequestUpdateFavorite:
+    type: object
+    properties:
+      is_favorite:
+        title: Is favorite
+        type: boolean
+  CourseInvitationAccept:
+    required:
+      - token
+    type: object
+    properties:
+      token:
+        title: Token
+        type: string
+        maxLength: 32
+        minLength: 1
+      password:
+        title: Password
+        type: string
+        maxLength: 128
+        minLength: 1
+      first_name:
+        title: First name
+        type: string
+        maxLength: 150
+        minLength: 1
+      last_name:
+        title: Last name
+        type: string
+        maxLength: 150
+        minLength: 1
+  CourseValidateSlug:
+    required:
+      - slug
+    type: object
+    properties:
+      slug:
+        title: Slug
+        type: string
+        format: slug
+        pattern: ^[-a-zA-Z0-9_]+$
+        maxLength: 175
+        minLength: 1
+  CourseDetail:
+    required:
+      - name
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 150
+        minLength: 1
+      slug:
+        title: Slug
+        type: string
+        format: slug
+        pattern: ^[-a-zA-Z0-9_]+$
+        maxLength: 175
+      short_intro:
+        title: Short intro
+        type: string
+      description:
+        title: Description
+        type: string
+      status:
+        title: Status
+        type: string
+        enum:
+          - unpublished
+          - published
+        readOnly: true
+      deployment_id:
+        title: Deployment id
+        type: string
+        maxLength: 128
+        x-nullable: true
+      has_mandatory_sequence:
+        title: Has mandatory sequence
+        type: boolean
+      current_user_role:
+        title: Current user role
+        type: string
+        enum:
+          - student
+          - instructor
+        readOnly: true
+      has_lti_integrations:
+        title: Has lti integrations
+        type: boolean
+        readOnly: true
+      lti_client_id:
+        title: Lti client id
+        type: string
+        readOnly: true
+        minLength: 1
+      campus:
+        $ref: '#/definitions/Campus'
+  ActivityList:
+    required:
+      - title
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      slug:
+        title: Slug
+        type: string
+        format: slug
+        pattern: ^[-a-zA-Z0-9_]+$
+        readOnly: true
+        minLength: 1
+      title:
+        title: Title
+        type: string
+        maxLength: 150
+        minLength: 1
+      due_date:
+        title: Due date
+        type: string
+        format: date-time
+        x-nullable: true
+      is_allow_submissions_after_due_date:
+        title: Allow submissions after due date
+        type: boolean
+      status:
+        title: Status
+        type: string
+        enum:
+          - draft
+          - published
+          - archived
+      status_display:
+        title: Status display
+        type: string
+        readOnly: true
+      is_submittable:
+        title: Submittable
+        description: Allow students to submit their work.
+        type: boolean
+      is_submission_required:
+        title: Submission required
+        description: Require students to submit their work.
+        type: boolean
+      submissions_count:
+        title: Submissions count
+        type: integer
+        readOnly: true
+      submission_uuid:
+        title: Submission uuid
+        description: UUID of student submission.
+        type: string
+        format: uuid
+        readOnly: true
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+      order:
+        title: Order
+        type: integer
+        readOnly: true
+      is_locked:
+        title: Is locked
+        type: string
+        readOnly: true
+      is_passed:
+        title: Is passed
+        type: boolean
+        readOnly: true
+  ActivityCreate:
+    required:
+      - title
+      - lesson
+    type: object
+    properties:
+      title:
+        title: Title
+        type: string
+        maxLength: 150
+        minLength: 1
+      due_date:
+        title: Due date
+        type: string
+        format: date-time
+        x-nullable: true
+      lesson:
+        title: Lesson
+        type: string
+        format: uuid
+      is_allow_submissions_after_due_date:
+        title: Allow submissions after due date
+        type: boolean
+      is_autograde_submissions:
+        title: Autograde submissions
+        description: Automatically run grading for submitted submissions.
+        type: boolean
+      is_submittable:
+        title: Submittable
+        description: Allow students to submit their work.
+        type: boolean
+      is_submission_required:
+        title: Submission required
+        description: Require students to submit their work.
+        type: boolean
+      base_image:
+        title: Base image
+        type: string
+        format: uuid
+  ActivityWorkerResources:
+    type: object
+    properties:
+      worker_cpu_quantity:
+        title: Worker cpu quantity
+        type: string
+        enum:
+          - 300m
+          - 500m
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+          - '6'
+          - '7'
+          - '8'
+          - '9'
+          - '10'
+          - '12'
+          - '20'
+      worker_memory_quantity:
+        title: Worker memory quantity
+        type: string
+        enum:
+          - 128Mi
+          - 256Mi
+          - 512Mi
+          - 1Gi
+          - 2Gi
+          - 3Gi
+          - 4Gi
+          - 5Gi
+          - 6Gi
+          - 7Gi
+          - 8Gi
+          - 9Gi
+          - 10Gi
+          - 15Gi
+          - 20Gi
+  ActivityDetail:
+    required:
+      - title
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      slug:
+        title: Slug
+        type: string
+        format: slug
+        pattern: ^[-a-zA-Z0-9_]+$
+        readOnly: true
+        minLength: 1
+      status:
+        title: Status
+        type: string
+        enum:
+          - draft
+          - published
+          - archived
+      title:
+        title: Title
+        type: string
+        maxLength: 150
+        minLength: 1
+      due_date:
+        title: Due date
+        type: string
+        format: date-time
+        x-nullable: true
+      is_allow_submissions_after_due_date:
+        title: Allow submissions after due date
+        type: boolean
+      is_autograde_submissions:
+        title: Autograde submissions
+        description: Automatically run grading for submitted submissions.
+        type: boolean
+      is_submittable:
+        title: Submittable
+        description: Allow students to submit their work.
+        type: boolean
+      is_submission_required:
+        title: Submission required
+        description: Require students to submit their work.
+        type: boolean
+      is_valid:
+        title: Is valid
+        type: string
+        readOnly: true
+      base_image:
+        $ref: '#/definitions/BaseImage'
+      worker_resources:
+        $ref: '#/definitions/ActivityWorkerResources'
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+      submissions_count:
+        title: Submissions count
+        type: string
+        readOnly: true
+      lesson_uuid:
+        title: Lesson uuid
+        type: string
+        readOnly: true
+      lesson_title:
+        title: Lesson title
+        type: string
+        readOnly: true
+      next_activity:
+        title: Next activity
+        type: string
+        readOnly: true
+      is_lti_enabled:
+        title: Is lti enabled
+        type: boolean
+        readOnly: true
+  ActivityImport:
+    type: object
+    properties:
+      file:
+        title: File
+        description: Notebook file.
+        type: string
+        readOnly: true
+        format: uri
+      skip_invalid_cells:
+        title: Skip invalid cells
+        description: Skip invalid cells.
+        type: boolean
+      lesson_id:
+        title: Lesson id
+        type: string
+        format: uuid
+  ActivityUpdate:
+    type: object
+    properties:
+      title:
+        title: Title
+        type: string
+        maxLength: 150
+        minLength: 1
+      due_date:
+        title: Due date
+        type: string
+        format: date-time
+        x-nullable: true
+      is_allow_submissions_after_due_date:
+        title: Allow submissions after due date
+        type: boolean
+      is_autograde_submissions:
+        title: Autograde submissions
+        description: Automatically run grading for submitted submissions.
+        type: boolean
+      is_submittable:
+        title: Submittable
+        description: Allow students to submit their work.
+        type: boolean
+      is_submission_required:
+        title: Submission required
+        description: Require students to submit their work.
+        type: boolean
+      lesson:
+        title: Lesson
+        type: string
+        format: uuid
+      order:
+        title: Order
+        type: integer
+        minimum: 0
+      base_image:
+        title: Base image
+        type: string
+        format: uuid
+        x-nullable: true
+      worker_resources:
+        $ref: '#/definitions/ActivityWorkerResources'
+  ActivityAttachmentAddByChunkedUpload:
+    required:
+      - upload_id
+    type: object
+    properties:
+      upload_id:
+        title: Upload id
+        type: string
+        format: uuid
+  ActivityAttachment:
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      filename:
+        title: Filename
+        type: string
+        readOnly: true
+      size:
+        title: Size
+        type: string
+        readOnly: true
+      url:
+        title: Url
+        type: string
+        readOnly: true
+  ActivityAttachmentAdd:
+    type: object
+    properties:
+      file:
+        title: File
+        type: string
+        readOnly: true
+        format: uri
+  ActivityCells:
+    required:
+      - cells
+    type: object
+    properties:
+      cells:
+        title: Cells
+        type: object
+  CellsExecutionState:
+    type: object
+    properties:
+      status:
+        title: Status
+        type: string
+        enum:
+          - pending
+          - started
+          - completed
+          - failed
+      results:
+        title: Results
+        type: object
+  ActivityCopy:
+    type: object
+    properties:
+      lesson_id:
+        title: Lesson id
+        type: string
+        format: uuid
+        x-nullable: true
+  GenerateUnittests:
+    required:
+      - code
+    type: object
+    properties:
+      code:
+        type: array
+        items:
+          type: string
+  ActivitySubmissionScore:
+    required:
+      - activity_total_points
+    type: object
+    properties:
+      activity_total_points:
+        title: Activity total points
+        type: number
+      user_total_points:
+        title: User total points
+        type: number
+        readOnly: true
+  ActivitySubmissionLTISync:
+    type: object
+    properties:
+      status:
+        title: LTI synced status
+        type: string
+        enum:
+          - synced
+          - failed
+      error:
+        title: LTI synced error
+        type: string
+        maxLength: 255
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+  ActivitySubmissionList:
+    required:
+      - user
+      - score
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      status:
+        title: Status
+        type: string
+        enum:
+          - draft
+          - submitted
+          - auto_grading
+          - auto_graded
+          - auto_grading_failed
+          - needs_manual_grading
+          - resubmission_allowed
+          - viewed
+          - completed
+      status_display:
+        title: Status display
+        type: string
+        readOnly: true
+      user:
+        $ref: '#/definitions/UserProfile'
+      score:
+        $ref: '#/definitions/ActivitySubmissionScore'
+      lti_sync:
+        $ref: '#/definitions/ActivitySubmissionLTISync'
+  ActivitySubmissionCreate:
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+  CompleteChunkUpload:
+    required:
+      - upload_id
+    type: object
+    properties:
+      upload_id:
+        title: Upload id
+        type: string
+        format: uuid
+  AddChunkByActivity:
+    type: object
+    properties:
+      upload_id:
+        title: Upload id
+        type: string
+        format: uuid
+        x-nullable: true
+      file:
+        title: File
+        type: string
+        readOnly: true
+        format: uri
+      activity_id:
+        title: Activity id
+        type: string
+        format: uuid
+        x-nullable: true
+  UserAccount:
+    type: object
+    properties:
+      full_name:
+        title: Full name
+        type: string
+        readOnly: true
+      avatar_url:
+        title: Avatar url
+        type: string
+        readOnly: true
+  CourseParticipantMention:
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      email:
+        title: Email
+        type: string
+        readOnly: true
+      first_name:
+        title: First name
+        type: string
+        maxLength: 150
+      last_name:
+        title: Last name
+        type: string
+        maxLength: 150
+      avatar_url:
+        title: Avatar url
+        type: string
+        readOnly: true
+  CommentMention:
+    required:
+      - user_id
+    type: object
+    properties:
+      user:
+        $ref: '#/definitions/CourseParticipantMention'
+      user_id:
+        title: User id
+        type: string
+        format: uuid
+      position:
+        title: Position
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+  CommentCreate:
+    required:
+      - thread
+      - message
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      author:
+        $ref: '#/definitions/UserAccount'
+      thread:
+        title: Thread
+        type: string
+        format: uuid
+      message:
+        title: Message
+        type: string
+        maxLength: 1024
+        minLength: 1
+      created:
+        title: Created
+        type: string
+        format: date-time
+        readOnly: true
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+      can_edit:
+        title: Can edit
+        type: string
+        readOnly: true
+      can_delete:
+        title: Can delete
+        type: string
+        readOnly: true
+      mentions:
+        type: array
+        items:
+          $ref: '#/definitions/CommentMention'
+  CommentRead:
+    required:
+      - message
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      message:
+        title: Message
+        type: string
+        maxLength: 1024
+        minLength: 1
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+      can_edit:
+        title: Can edit
+        type: string
+        readOnly: true
+      can_delete:
+        title: Can delete
+        type: string
+        readOnly: true
+      author:
+        title: Author
+        type: string
+        readOnly: true
+      reactions:
+        title: Reactions
+        type: string
+        readOnly: true
+      mentions:
+        type: array
+        items:
+          $ref: '#/definitions/CommentMention'
+        readOnly: true
+  Comment:
+    required:
+      - message
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      author:
+        $ref: '#/definitions/UserAccount'
+      message:
+        title: Message
+        type: string
+        maxLength: 1024
+        minLength: 1
+      created:
+        title: Created
+        type: string
+        format: date-time
+        readOnly: true
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+      can_edit:
+        title: Can edit
+        type: string
+        readOnly: true
+      can_delete:
+        title: Can delete
+        type: string
+        readOnly: true
+      mentions:
+        type: array
+        items:
+          $ref: '#/definitions/CommentMention'
+  Reaction:
+    required:
+      - reactions
+    type: object
+    properties:
+      reactions:
+        type: array
+        items:
+          type: string
+          minLength: 1
+  DiscussionCreate:
+    required:
+      - activity
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      author:
+        $ref: '#/definitions/UserAccount'
+      title:
+        title: Title
+        type: string
+        maxLength: 150
+      intro:
+        title: Intro
+        type: string
+        maxLength: 1024
+      activity:
+        title: Activity
+        type: string
+        format: uuid
+      created:
+        title: Created
+        type: string
+        format: date-time
+        readOnly: true
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+  ThreadMention:
+    required:
+      - user_id
+    type: object
+    properties:
+      user:
+        $ref: '#/definitions/CourseParticipantMention'
+      user_id:
+        title: User id
+        type: string
+        format: uuid
+      position:
+        title: Position
+        type: integer
+        maximum: 2147483647
+        minimum: -2147483648
+  ThreadRead:
+    required:
+      - message
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      message:
+        title: Message
+        type: string
+        maxLength: 1024
+        minLength: 1
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+      can_edit:
+        title: Can edit
+        type: string
+        readOnly: true
+      can_delete:
+        title: Can delete
+        type: string
+        readOnly: true
+      author:
+        title: Author
+        type: string
+        readOnly: true
+      reactions:
+        title: Reactions
+        type: string
+        readOnly: true
+      mentions:
+        type: array
+        items:
+          $ref: '#/definitions/ThreadMention'
+        readOnly: true
+      comments:
+        type: array
+        items:
+          $ref: '#/definitions/CommentRead'
+        readOnly: true
+  DiscussionRead:
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      title:
+        title: Title
+        type: string
+        maxLength: 150
+      intro:
+        title: Intro
+        type: string
+        maxLength: 1024
+      created:
+        title: Created
+        type: string
+        format: date-time
+        readOnly: true
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+      author:
+        title: Author
+        type: string
+        readOnly: true
+      reactions:
+        title: Reactions
+        type: string
+        readOnly: true
+      threads:
+        type: array
+        items:
+          $ref: '#/definitions/ThreadRead'
+        readOnly: true
+  Discussion:
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      author:
+        $ref: '#/definitions/UserAccount'
+      title:
+        title: Title
+        type: string
+        maxLength: 150
+      intro:
+        title: Intro
+        type: string
+        maxLength: 1024
+      created:
+        title: Created
+        type: string
+        format: date-time
+        readOnly: true
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+  CourseImportRepository:
+    required:
+      - token
+      - repository_name
+    type: object
+    properties:
+      token:
+        title: Token
+        type: string
+        minLength: 1
+      repository_name:
+        title: Repository name
+        type: string
+        minLength: 1
+      exclude_paths:
+        type: array
+        items:
+          type: string
+          minLength: 1
+      is_preview:
+        title: Is preview
+        type: boolean
+  CourseInvitationPublic:
+    required:
+      - email
+      - role
+    type: object
+    properties:
+      status:
+        title: Status
+        type: string
+        readOnly: true
+      email:
+        title: Email
+        type: string
+        format: email
+        maxLength: 254
+        minLength: 1
+      first_name:
+        title: First name
+        type: string
+        maxLength: 100
+      last_name:
+        title: Last name
+        type: string
+        maxLength: 100
+      role:
+        title: Role
+        type: string
+        enum:
+          - student
+          - instructor
+      user_exists:
+        title: User exists
+        type: string
+        readOnly: true
+      course_slug:
+        title: Course slug
+        type: string
+        readOnly: true
+      course_status:
+        title: Course status
+        type: string
+        readOnly: true
+      campus_slug:
+        title: Campus slug
+        type: string
+        readOnly: true
+  CourseInvation:
+    required:
+      - email
+      - role
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      email:
+        title: Email
+        type: string
+        format: email
+        maxLength: 254
+        minLength: 1
+      role:
+        title: Role
+        type: string
+        enum:
+          - student
+          - instructor
+      status:
+        title: Status
+        type: string
+        readOnly: true
+      first_name:
+        title: First name
+        type: string
+        maxLength: 100
+      last_name:
+        title: Last name
+        type: string
+        maxLength: 100
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+  CourseInvitationsCreate:
+    required:
+      - invitations
+    type: object
+    properties:
+      invitations:
+        type: array
+        items:
+          $ref: '#/definitions/CourseInvation'
+  LessonList:
+    required:
+      - title
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      title:
+        title: Title
+        type: string
+        maxLength: 150
+        minLength: 1
+      description:
+        title: Description
+        type: string
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+      order:
+        title: Order
+        type: integer
+        readOnly: true
+      activities:
+        type: array
+        items:
+          $ref: '#/definitions/ActivityList'
+        readOnly: true
+  Lesson:
+    required:
+      - title
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      title:
+        title: Title
+        type: string
+        maxLength: 150
+        minLength: 1
+      description:
+        title: Description
+        type: string
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+      order:
+        title: Order
+        type: integer
+        minimum: 0
+  CourseParticipant:
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      email:
+        title: Email
+        type: string
+        readOnly: true
+      first_name:
+        title: First name
+        type: string
+        maxLength: 150
+      last_name:
+        title: Last name
+        type: string
+        maxLength: 150
+      avatar_url:
+        title: Avatar url
+        type: string
+        readOnly: true
+      role:
+        title: Role
+        type: string
+        enum:
+          - student
+          - instructor
+        readOnly: true
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+  CourseParticipantAdd:
+    required:
+      - user
+      - role
+    type: object
+    properties:
+      user:
+        title: User
+        type: string
+        format: uuid
+      role:
+        title: Role
+        type: string
+        enum:
+          - student
+          - instructor
+  CourseParticipantsAdd:
+    required:
+      - participants
+    type: object
+    properties:
+      participants:
+        type: array
+        items:
+          $ref: '#/definitions/CourseParticipantAdd'
+  CourseParticipantUpdate:
+    required:
+      - role
+    type: object
+    properties:
+      role:
+        title: Role
+        type: string
+        enum:
+          - student
+          - instructor
+  CoursePublic:
+    required:
+      - name
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 150
+        minLength: 1
+      slug:
+        title: Slug
+        type: string
+        format: slug
+        pattern: ^[-a-zA-Z0-9_]+$
+        maxLength: 175
+      short_intro:
+        title: Short intro
+        type: string
+      description:
+        title: Description
+        type: string
+      current_user_role:
+        title: Current user role
+        type: string
+        enum:
+          - student
+          - instructor
+        readOnly: true
+      status:
+        title: Status
+        type: string
+        enum:
+          - unpublished
+          - published
+      campus:
+        $ref: '#/definitions/Campus'
+  ActivitySubmissionBulkAutograde:
+    required:
+      - activity_submissions
+    type: object
+    properties:
+      activity_submissions:
+        type: array
+        items:
+          type: string
+        uniqueItems: true
+  ActivitySubmissionDetail:
+    required:
+      - activity
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      is_code_cells_valid:
+        title: Is code cells valid
+        type: boolean
+        readOnly: true
+      is_valid:
+        title: Is valid
+        type: string
+        readOnly: true
+      status:
+        title: Status
+        type: string
+        enum:
+          - draft
+          - submitted
+          - auto_grading
+          - auto_graded
+          - auto_grading_failed
+          - needs_manual_grading
+          - resubmission_allowed
+          - viewed
+          - completed
+      status_display:
+        title: Status display
+        type: string
+        readOnly: true
+      lesson_title:
+        title: Lesson title
+        type: string
+        readOnly: true
+      activity:
+        $ref: '#/definitions/ActivityDetail'
+  TestActivityCellDetail:
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      source:
+        title: Source
+        type: string
+        readOnly: true
+      hidden_source:
+        type: array
+        items:
+          type: string
+        readOnly: true
+      points:
+        title: Points
+        type: number
+        readOnly: true
+  QuizAnswerSubmission:
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      source:
+        title: Source
+        type: string
+        readOnly: true
+      correct:
+        title: Correct
+        type: boolean
+        readOnly: true
+  ActivityCellSubmissionDetail:
+    required:
+      - manual_grade_author
+      - feedback_author
+      - outputs
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      activity_cell_uuid:
+        title: Activity cell uuid
+        type: string
+        format: uuid
+        readOnly: true
+      answer:
+        title: Answer
+        type: string
+        readOnly: true
+      is_valid:
+        title: Is valid
+        type: boolean
+        readOnly: true
+      auto_grade:
+        title: Auto grade
+        type: number
+        minimum: 0
+        x-nullable: true
+      manual_grade:
+        title: Manual grade
+        type: number
+        x-nullable: true
+      manual_grade_author:
+        $ref: '#/definitions/UserProfile'
+      feedback:
+        title: Feedback
+        type: string
+      feedback_author:
+        $ref: '#/definitions/UserProfile'
+      extra_credit:
+        title: Extra credit
+        type: number
+        x-nullable: true
+      outputs:
+        title: Outputs
+        type: object
+      tests_results:
+        title: Tests results
+        type: object
+        readOnly: true
+      quiz_answers:
+        $ref: '#/definitions/QuizAnswerSubmission'
+  ActivityCellSubmissionList:
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      type:
+        title: Type
+        type: string
+        enum:
+          - code
+          - text
+          - quiz
+          - discussion
+        readOnly: true
+      subtype:
+        title: Subtype
+        type: string
+        enum:
+          - readonly
+          - auto_graded
+          - manually_graded
+          - autograder_tests
+          - static_code
+          - single_response
+          - multiple_response
+          - open_response
+          - true_false
+          - fill_in_the_blank
+        readOnly: true
+      source:
+        title: Source
+        type: string
+        readOnly: true
+      hidden_source:
+        type: array
+        items:
+          type: string
+        readOnly: true
+      points:
+        title: Points
+        type: number
+        readOnly: true
+      language:
+        title: Language
+        type: string
+        readOnly: true
+        minLength: 1
+      tests:
+        type: array
+        items:
+          $ref: '#/definitions/TestActivityCellDetail'
+        readOnly: true
+      question:
+        title: Question
+        type: string
+        readOnly: true
+      answers:
+        $ref: '#/definitions/QuizAnswerSubmission'
+      submission:
+        $ref: '#/definitions/ActivityCellSubmissionDetail'
+  ActivityCellSubmissionCreate:
+    required:
+      - cell_uuid
+      - answer
+    type: object
+    properties:
+      cell_uuid:
+        title: Cell uuid
+        type: string
+        format: uuid
+      answer:
+        title: Answer
+        type: string
+  ActivityCellSubmissionUpdate:
+    required:
+      - answer
+    type: object
+    properties:
+      answer:
+        title: Answer
+        type: string
+        x-nullable: true
+  ThreadCreate:
+    required:
+      - discussion
+      - message
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      author:
+        $ref: '#/definitions/UserAccount'
+      discussion:
+        title: Discussion
+        type: string
+        format: uuid
+      message:
+        title: Message
+        type: string
+        maxLength: 1024
+        minLength: 1
+      created:
+        title: Created
+        type: string
+        format: date-time
+        readOnly: true
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+      can_edit:
+        title: Can edit
+        type: string
+        readOnly: true
+      can_delete:
+        title: Can delete
+        type: string
+        readOnly: true
+      mentions:
+        type: array
+        items:
+          $ref: '#/definitions/ThreadMention'
+  Thread:
+    required:
+      - message
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      author:
+        $ref: '#/definitions/UserAccount'
+      message:
+        title: Message
+        type: string
+        maxLength: 1024
+        minLength: 1
+      created:
+        title: Created
+        type: string
+        format: date-time
+        readOnly: true
+      updated:
+        title: Updated
+        type: string
+        format: date-time
+        readOnly: true
+      can_edit:
+        title: Can edit
+        type: string
+        readOnly: true
+      can_delete:
+        title: Can delete
+        type: string
+        readOnly: true
+      mentions:
+        type: array
+        items:
+          $ref: '#/definitions/ThreadMention'
+  Invoice:
+    required:
+      - invoice_id
+    type: object
+    properties:
+      invoice_id:
+        title: Invoice id
+        type: string
+        minLength: 1
+  CreateCheckoutSession:
+    required:
+      - price
+      - success_url
+      - cancel_url
+    type: object
+    properties:
+      price:
+        title: Price
+        type: string
+        format: uuid
+      success_url:
+        title: Success url
+        type: string
+        minLength: 1
+      cancel_url:
+        title: Cancel url
+        type: string
+        minLength: 1
+  CreateStriperCustomerPortalSession:
+    required:
+      - return_url
+    type: object
+    properties:
+      return_url:
+        title: Return url
+        type: string
+        format: uri
+        minLength: 1
+  Price:
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      amount:
+        title: Amount
+        type: string
+        readOnly: true
+      currency:
+        title: Currency
+        type: string
+        readOnly: true
+      interval:
+        title: Interval
+        type: string
+        readOnly: true
+  Plan:
+    required:
+      - title
+    type: object
+    properties:
+      uuid:
+        title: Uuid
+        type: string
+        format: uuid
+        readOnly: true
+      title:
+        title: Title
+        type: string
+        maxLength: 30
+        minLength: 1
+      description:
+        title: Description
+        type: string
+        maxLength: 255
+      icon:
+        title: Icon
+        type: string
+        enum:
+          - bold
+          - insert-link
+          - italic
+          - paragraph-indent
+          - paragraph-orderedList
+          - paragraph-unorderedList
+          - paragraph-outdent
+          - strike-through
+          - underline
+          - academic-cap
+          - adjustments
+          - annotation-comment
+          - archive
+          - arrow-circle-down
+          - arrow-circle-left
+          - arrow-circle-right
+          - arrow-circle-up
+          - arrow-down
+          - arrow-left
+          - arrow-narrow-down
+          - arrow-narrow-left
+          - arrow-narrow-right
+          - arrow-narrow-up
+          - arrows-expand
+          - arrow-up
+          - at-symbol
+          - backspace
+          - badge-check
+          - ban
+          - beaker
+          - bell
+          - bookmark
+          - bookmark-alt
+          - book-open
+          - briefcase
+          - cake
+          - calculator
+          - calendar
+          - camera
+          - cash
+          - chart-bar
+          - chart-pie
+          - chart-square-bar
+          - chat
+          - chat-alt
+          - chat-alt-2
+          - check
+          - check-circle
+          - chevron-double-down
+          - chevron-double-left
+          - chevron-double-right
+          - chevron-double-up
+          - chevron-down
+          - chevron-left
+          - chevron-right
+          - chevron-up
+          - chip
+          - clipboard
+          - clipboard-check
+          - clipboard-copy
+          - clipboard-list
+          - clock
+          - close
+          - cloud
+          - cloud-download
+          - cloud-upload
+          - code
+          - cog
+          - collection
+          - color-swatch
+          - credit-card
+          - cube
+          - cube-transparent
+          - currency-bangladeshi
+          - currency-dollar
+          - currency-euro
+          - currency-pound
+          - currency-rupee
+          - currency-yen
+          - cursor-click
+          - database
+          - desktop-computer
+          - device-mobile
+          - device-tablet
+          - document
+          - document-add
+          - document-download
+          - document-duplicate
+          - document-remove
+          - document-report
+          - document-search
+          - document-text
+          - dots-circle-horizontal
+          - dots-horizontal
+          - dots-vertical
+          - dots-rearrange
+          - download
+          - duplicate
+          - emoji-happy
+          - emoji-sad
+          - exclamation
+          - exclamation-circle
+          - external-link
+          - eye
+          - eye_off
+          - fast-forward
+          - film
+          - filter
+          - finger-print
+          - fire
+          - flag
+          - folder
+          - folder-add
+          - folder-download
+          - folder-open
+          - folder-remove
+          - gift
+          - globe
+          - globe-all
+          - hand
+          - hashtag
+          - heart
+          - home
+          - identification
+          - import
+          - inbox
+          - inbox_in
+          - information-circle
+          - key
+          - library
+          - light-bulb
+          - lightning-bolt
+          - link
+          - location-marker
+          - lock-closed
+          - lock-open
+          - login
+          - logout
+          - mail
+          - mail-open
+          - map
+          - menu
+          - menu-alt-1
+          - menu-alt-2
+          - menu-alt-3
+          - menu-alt-4
+          - microphone
+          - minus
+          - minus-circle
+          - moon
+          - music-note
+          - newspaper
+          - organization
+          - paper-airplane
+          - paper-clip
+          - pause
+          - pencil
+          - pencil-alt
+          - phone
+          - phone-incoming
+          - phone-missed-call
+          - phone-outgoing
+          - photograph
+          - play
+          - play-hover
+          - plus-add
+          - plus-circle
+          - preloader
+          - presentation-chart-bar
+          - presentation-chart-line
+          - printer
+          - publish
+          - puzzle
+          - qrcode
+          - question-mark-circle
+          - receipt-refund
+          - receipt-tax
+          - redo
+          - redo-1
+          - refresh
+          - reply
+          - rewind
+          - rss
+          - save
+          - save-as
+          - scale
+          - scissors
+          - search
+          - search-circle
+          - selector
+          - server
+          - share
+          - shield-check
+          - shield-exclamation
+          - shopping-bag
+          - shopping-cart
+          - sort-ascending
+          - sort-descending
+          - sparkles
+          - speakerphone
+          - star
+          - status-offline
+          - status-online
+          - stop
+          - sun
+          - support
+          - switch-horizontal
+          - switch-vertical
+          - table
+          - tag
+          - template
+          - terminal
+          - thumb-down
+          - thumb-up
+          - ticket
+          - translate
+          - trash
+          - trending-down
+          - trending-up
+          - truck
+          - undo
+          - undo-1
+          - upload
+          - user
+          - user-add-invite
+          - user-circle
+          - user-group
+          - user-remove
+          - users
+          - variable
+          - video-camera
+          - view-boards
+          - view-grid
+          - view-grid-add
+          - view-list
+          - volume-off
+          - volume-up
+          - wifi
+          - x-circle
+          - zoom-in
+          - zoom-out
+          - behance
+          - dribbble
+          - facebook
+          - github
+          - gitlab
+          - google
+          - instagram
+          - linkedin
+          - line
+          - meta
+          - pinterest
+          - snapchat
+          - spotify
+          - telegram
+          - tiktok
+          - tinder
+          - twitter
+          - vimeo
+          - whatsapp
+          - youtube
+          - addline
+          - unpublish
+          - user-profile
+          - campus
+      is_enterprise:
+        title: Is enterprise
+        description: If checked, we show contact us instead of a price.
+        type: boolean
+      features:
+        $ref: '#/definitions/PlanFeature'
+      prices:
+        $ref: '#/definitions/Price'
+  CodeCell:
+    required:
+      - cell_id
+      - code
+    type: object
+    properties:
+      cell_id:
+        title: Cell id
+        type: string
+        minLength: 1
+      code:
+        type: array
+        items:
+          type: string
+  WorkerCheckHistory:
+    required:
+      - activity_id
+      - codes
+    type: object
+    properties:
+      activity_id:
+        title: Activity id
+        type: string
+        format: uuid
+      codes:
+        type: array
+        items:
+          $ref: '#/definitions/CodeCell'
+  WorkerCheckHistoryResult:
+    required:
+      - cells
+    type: object
+    properties:
+      cells:
+        type: array
+        items:
+          type: string
+          format: uuid
+  WorkerExecuteCode:
+    required:
+      - cell_id
+      - code
+      - activity_id
+    type: object
+    properties:
+      cell_id:
+        title: Cell id
+        type: string
+        minLength: 1
+      code:
+        type: array
+        items:
+          type: string
+      activity_id:
+        title: Activity id
+        type: string
+        format: uuid
+      store_in_session:
+        title: Store in session
+        type: boolean
+  ExecuteCodeMessage:
+    required:
+      - type
+      - content
+    type: object
+    properties:
+      type:
+        title: Type
+        type: string
+        minLength: 1
+      content:
+        title: Content
+        type: object
+        additionalProperties:
+          type: string
+          x-nullable: true
+  ExecuteCodeResult:
+    required:
+      - outputs
+    type: object
+    properties:
+      outputs:
+        type: array
+        items:
+          $ref: '#/definitions/ExecuteCodeMessage'
+  WorkerExecuteCodes:
+    required:
+      - activity_id
+      - codes
+    type: object
+    properties:
+      activity_id:
+        title: Activity id
+        type: string
+        format: uuid
+      codes:
+        type: array
+        items:
+          $ref: '#/definitions/CodeCell'
+  ExecuteCodesResult:
+    required:
+      - outputs
+      - cell_id
+    type: object
+    properties:
+      outputs:
+        type: array
+        items:
+          $ref: '#/definitions/ExecuteCodeMessage'
+      cell_id:
+        title: Cell id
+        type: string
+        minLength: 1
+  Worker:
+    required:
+      - activity_id
+    type: object
+    properties:
+      activity_id:
+        title: Activity id
+        type: string
+        format: uuid
