@@ -45,6 +45,7 @@ virtualenv -p python3 venv/
 source venv/bin/activate
 pip install -r requirements.txt
 ```
+
 1. Export the OPENAI_API_KEY environment variable.
 
 ```bash
