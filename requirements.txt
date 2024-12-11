@@ -3,3 +3,8 @@ jupyterlab
 langchain
 openai
 wikipedia
+openai-whisper
+reportlab
+pillow
+moviepy
+opencv-python
